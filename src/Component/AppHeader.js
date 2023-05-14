@@ -12,12 +12,11 @@ const menu = (
     <div>
     {/*    增加一个用户名，使其与Item对其*/}
         <Menu>
-            <>
-                <div className="user-name">用户名</div>
-            </>
+            <div className="user-name"><b>惜取少年时</b></div>
             <Menu.Item key="1">个人信息</Menu.Item>
-            <Menu.Item key="2">设置</Menu.Item>
-            <Menu.Item key="3">退出登录</Menu.Item>
+            <Menu.Item key="2">通用设置</Menu.Item>
+            <Menu.Item key="3">内容管理</Menu.Item>
+            <Menu.Item key="4">退出登录</Menu.Item>
         </Menu>
     </div>
 );
@@ -62,7 +61,7 @@ const AppHeader = () => {
         <div className="user-info">
 
             <Dropdown overlay={menu}>
-                <Avatar icon={<UserOutlined/>}/>
+                <Avatar icon={<UserOutlined/>} src="https://img.wxcha.com/m00/c3/3c/90dc57044c2661b42aa62b08a452b81c.jpg"/>
 
             </Dropdown>
         </div>
