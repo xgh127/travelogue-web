@@ -8,7 +8,7 @@ const AppFooter = () => {
         <Footer  style={{
             textAlign: 'center',
         }}>
-            &copy; 2023 Your Company Name. All Rights Reserved.
+            &copy; 2023 SJTU. All Rights Reserved By Xgh,Yh,Cy.
         </Footer>
     );
 };
