@@ -1,22 +1,32 @@
-import React from 'react';
-import { Input} from 'antd';
-import '../CSS/AppHeader.css';
+import React, {useState} from 'react';
+import {Input, Select} from 'antd';
+import '../CSS/SearchBar.css';
+import {Option} from "antd/es/mentions";
 const { Search } = Input;
 //设置SearchBar的css样式
 
-const SearchBar: React.FC = () => (
-        <Search placeholder="input search text"  style={
-            {
-                width:500,
-                marginTop:15,
-            //    设置其在父组件中的位置
-                position:'absolute',
-                left:'50%',
-                marginLeft:-250,
-                top:0,
-                zIndex:100,
+const SearchBar: React.FC = () => {
+    const [searchType, setSearchType] = useState(0);
 
-            }}  />
-);
+    const handleSearchTypeChange = (value) => {
+        console.log(value);
+        setSearchType(value);
+    };
+    return(
+
+        <div>
+            <Input.Group compact className="SearchBar" >
+                <Select  style={{ width: '20%',textAlign:'center'}} defaultValue="0" onChange={handleSearchTypeChange}>
+                    <Option value="0" >按标题搜索</Option>
+                    <Option value="1">按内容搜索</Option>
+                    <Option value="2">按作者搜索</Option>
+                </Select>
+                <Search placeholder="input search text"   size={"middle"} style={{ width: '80%'}}   onSearch={(value) => console.log(value)}/>
+            </Input.Group>
+
+        </div>
+
+    );
+}
 
 export default SearchBar;

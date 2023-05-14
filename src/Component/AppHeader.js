@@ -1,9 +1,10 @@
-import React from 'react';
-import { Layout, Menu, Button, Avatar, Dropdown } from 'antd';
+import React, {useState} from 'react';
+import {Layout, Menu, Button, Avatar, Dropdown, Input, Select} from 'antd';
 import { UserOutlined} from '@ant-design/icons';
 import '../CSS/AppHeader.css';
 import 'antd/dist/antd.css';
 import SearchBar from "./SearchBar";
+import {Option} from "antd/es/mentions";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -48,11 +49,9 @@ const AppHeader = () => {
                     </Menu>
                 </div>
             <div className="search-box">
-
                         <SearchBar className="SearchBar"
-                            onSearch={(value) => console.log(value)}
-                        />
 
+                        />
             </div>
             <div className="right-container">
                 <Menu theme="dark" mode="horizontal">

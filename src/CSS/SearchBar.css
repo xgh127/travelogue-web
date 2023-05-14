@@ -1,0 +1,10 @@
+.SearchBar{
+    width:500px;
+    margin-top:15px;
+    /*//    设置其在父组件中的位置*/
+    position:absolute;
+    left:50%;
+    margin-left:-250px;
+    top:0;
+    z-index:100;
+}
