@@ -1,0 +1,26 @@
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-links {
+    display: flex;
+}
+
+.search-box {
+    margin-left: auto;
+}
+
+.right-container {
+    display: flex;
+}
+.TopButton{
+    margin-top: 15px;
+/*    设置按钮之间的间距*/
+    margin-right: 20px;
+
+}
