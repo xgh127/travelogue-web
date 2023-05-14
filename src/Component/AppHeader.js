@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
-import {Layout, Menu, Button, Avatar, Dropdown, Input, Select} from 'antd';
-import { UserOutlined} from '@ant-design/icons';
+import React from 'react';
+import {Layout, Menu, Button, Avatar, Dropdown} from 'antd';
+import {
+    CommentOutlined,
+    PlusOutlined,
+    UserOutlined
+} from '@ant-design/icons';
 import '../CSS/AppHeader.css';
 import 'antd/dist/antd.css';
 import SearchBar from "./SearchBar";
-import {Option} from "antd/es/mentions";
+import {FloatButton} from "antd";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -54,15 +58,15 @@ const AppHeader = () => {
             </div>
             <div className="right-container">
                 <Menu theme="dark" mode="horizontal">
-                        <Button type="primary" className="TopButton">写游记</Button>
-                        <Button className="TopButton">我的消息</Button>
+
+                        <Button type="primary"  className="TopButton" icon={<PlusOutlined/>}>写游记</Button>
+                        <Button className="TopButton" icon={<CommentOutlined />}>我的消息</Button>
                     <SubMenu
     title={
         <div className="user-info">
 
             <Dropdown overlay={menu}>
                 <Avatar icon={<UserOutlined/>} src="https://img.wxcha.com/m00/c3/3c/90dc57044c2661b42aa62b08a452b81c.jpg"/>
-
             </Dropdown>
         </div>
     }

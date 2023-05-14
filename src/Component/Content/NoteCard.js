@@ -1,4 +1,5 @@
 import { Card, Avatar } from 'antd';
+import {EyeOutlined, HeartOutlined} from "@ant-design/icons";
 
 //游记信息展示卡片
 export const NoteCard = ({ note }) => {
@@ -12,9 +13,15 @@ export const NoteCard = ({ note }) => {
                 <p>{note.summary}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Avatar src={note.author.avatarUrl} />
-                    <span>{note.author.name}</span>
-                    <span>{note.views} 浏览</span>
-                    <span>{note.likes} 赞</span>
+                    <span><b>{note.author.name}</b></span>
+                    <div>
+                        <EyeOutlined style={{ marginRight: 5 }} />
+                        <span>{note.views}</span>
+                    </div>
+                    <div>
+                        <HeartOutlined style={{ marginRight: 5 }} />
+                        <span>{note.likes}</span>
+                    </div>
                 </div>
             </div>
         </Card>
