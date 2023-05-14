@@ -1,5 +1,6 @@
 import { Card, Avatar } from 'antd';
 
+//游记信息展示卡片
 export const NoteCard = ({ note }) => {
     return (
         <Card style={{ display: 'flex' }}>

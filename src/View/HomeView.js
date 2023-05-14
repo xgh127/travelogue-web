@@ -1,14 +1,11 @@
 import {Layout, theme} from "antd";
 import AppHeader from "../Component/AppHeader";
-import {Content} from "antd/es/layout/layout";
 import AppFooter from "../Component/Footer";
-import {NoteInfo} from "../Component/Content/NoteInfo";
 import {NoteList} from "../Component/Content/NoteList";
+import {AppContent} from "../Component/AppContent";
 
 const HomeView = () => {
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+
     const notes = [
         {
             title: '西湖印象',
@@ -96,24 +93,8 @@ const HomeView = () => {
     ];
     return(
         <Layout>
-        <AppHeader/>
-            <Content
-                className="site-layout"
-                style={{
-                    padding: '0 50px',
-                }}
-            >
-
-                <div
-                    style={{
-                        padding: 24,
-                        minHeight: 380,
-                        background: colorBgContainer,
-                    }}
-                >
-                    <NoteList notes={notes} />
-                </div>
-            </Content>
+            <AppHeader/>
+           <AppContent children={<NoteList notes={notes} />}/>
             <AppFooter/>
         </Layout>
     )
