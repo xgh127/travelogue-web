@@ -9,6 +9,7 @@ import '../CSS/AppHeader.css';
 import 'antd/dist/antd.css';
 import SearchBar from "./SearchBar";
 import {FloatButton} from "antd";
+import {useNavigate} from "react-router-dom";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -41,6 +42,7 @@ const navigationLinks = [
 ];
 
 const AppHeader = () => {
+    const navigate = useNavigate();
     return (
         <Header className="app-header">
             <div className="logo" />
@@ -59,7 +61,8 @@ const AppHeader = () => {
             <div className="right-container">
                 <Menu theme="dark" mode="horizontal">
 
-                        <Button type="primary"  className="TopButton" icon={<PlusOutlined/>}>写游记</Button>
+                        <Button type="primary"  className="TopButton" icon={<PlusOutlined/>}
+                        onClick={()=>{navigate('/TextEditor')}}>写游记</Button>
                         <Button className="TopButton" icon={<CommentOutlined />}>我的消息</Button>
                     <SubMenu
     title={

@@ -6,6 +6,7 @@ import {AppContent} from "../Component/AppContent";
 
 const HomeView = () => {
 
+
     const notes = [
         {
             title: '西湖印象',

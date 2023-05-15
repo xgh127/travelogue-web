@@ -3,11 +3,12 @@ import HomeView from "./View/HomeView";
 import {BrowserRouter as Router, Routes, Route, Navigate, useNavigate} from "react-router-dom";
 import EditorAuditView from "./View/EditorView/EditorAuditView";
 import LoginView from "./View/LoginView";
+import TextEditorView from "./View/TextEditorView";
 const routes = [
     {
         path: '/',
         element: <HomeView />,
-        canActivate: (user) => user ? true : false // 只有登录用户才能访问首页
+        canActivate: (user) => !!user // 只有登录用户才能访问首页
     },
     {
         path: '/login',
@@ -16,7 +17,12 @@ const routes = [
     {
         path: '/editor/audit',
         element: <EditorAuditView/>,
-        canActivate: (user) => user && user.role === 'editor' // 只有管理员用户才能访问仪表盘页面
+        canActivate: (user) => user && user.role === 'editor'
+    },
+    {
+        path:'/textEditor',
+        element: <TextEditorView/>,
+        canActivate: (user) => !!user // 只有管理员用户才能访问仪表盘页面
     }
 ];
 function App() {

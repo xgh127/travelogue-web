@@ -1,0 +1,102 @@
+/* editor.css */
+
+.editor-container {
+    max-width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.editor-header {
+    margin-bottom: 20px;
+
+}
+
+.editor-title input {
+    width: 60%;
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    outline: none;
+}
+
+.editor-toolbar {
+    margin-top: 10px;
+    /*//把图标放大一点*/
+
+}
+
+.ql-toolbar {
+    display: flex;
+    justify-content: center;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 5px 5px 0 0;
+    background-color: lightblue;
+    font-size: 18px;
+
+}
+
+.ql-toolbar .ql-picker,
+.ql-toolbar .ql-button {
+    padding: 8px 10px;
+    /*把工具栏图标放大*/
+
+}
+
+
+.ql-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 600px;
+}
+.react-quill .ql-editor {
+    font-size: 24px;
+}
+
+.editor-body {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.editor-placeholder {
+    font-size: large;
+    font-style: normal;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+.publish-settings{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    outline: none;
+}
+
+.preview-update-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.preview-button,
+.update-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.preview-button {
+    background-color: #ddd;
+    color: #333;
+}
+
+.update-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
