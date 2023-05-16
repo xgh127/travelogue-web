@@ -6,6 +6,8 @@ import LoginView from "./View/LoginView";
 import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
 import RegisterView from "./View/RegisterView";
+import TravelogueDetailView from "./View/TraveloguDetailView";
+
 const routes = [
     {
         path: '/',
@@ -32,6 +34,12 @@ const routes = [
 
     },
     {
+        path: '/travelogueDetail',
+        element: <TravelogueDetailView/>,
+        canActivate: (user) => !!user
+    },
+    {
+
         path:'/register',
         element: <RegisterView/>,
     },
