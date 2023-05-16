@@ -1,0 +1,98 @@
+/* PersonalProfile.css */
+
+.container {
+    display: flex;
+}
+
+.left-column {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.right-column {
+    flex: 2;
+    padding: 20px;
+}
+
+.user-info {
+    text-align: center;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.username {
+    margin-top: 10px
+}
+
+
+.info {
+    margin-top: 10px;
+}
+
+.social-media-link {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.travel-logs {
+    margin-bottom: 30px;
+}
+
+.log-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.log-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.log-cover {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.log-details {
+    flex: 1;
+}
+
+.log-title {
+    margin: 0;
+}
+
+.log-description {
+    margin-top: 10px;
+}
+
+.publish-time {
+    display: block;
+    margin-top: 10px;
+}
+
+.contribution-chart {
+    /* Add styles for the contribution chart section */
+}
+
+.chart-container {
+    /* Add styles for the chart container */
+}
+
+.contribution-item {
+    margin-bottom: 10px;
+}
+
+.contribution-label {
+    margin-right: 5px;
+}
+
+.contribution-value {
+    font-weight: bold;
+}

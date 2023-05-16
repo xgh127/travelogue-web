@@ -6,7 +6,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import '../CSS/AppHeader.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import SearchBar from "./SearchBar";
 import {FloatButton} from "antd";
 import {useNavigate} from "react-router-dom";
