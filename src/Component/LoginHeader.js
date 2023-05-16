@@ -5,7 +5,7 @@ import {
     UserOutlined
 } from '@ant-design/icons';
 import '../CSS/AppHeader.css';
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 import SchoolLogo from '../Assets/schoolLogo.png';
 const { Header } = Layout;
 const { SubMenu } = Menu;

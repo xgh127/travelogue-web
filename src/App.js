@@ -5,6 +5,7 @@ import EditorAuditView from "./View/EditorView/EditorAuditView";
 import LoginView from "./View/LoginView";
 import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
+import RegisterView from "./View/RegisterView";
 const routes = [
     {
         path: '/',
@@ -29,7 +30,11 @@ const routes = [
         path:'/textEditor',
         element: <TextEditorView/>,
 
-    }
+    },
+    {
+        path:'/register',
+        element: <RegisterView/>,
+    },
 ];
 function App() {
     const user = {

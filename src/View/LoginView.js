@@ -38,6 +38,7 @@ const LoginView = () => {
                                 name="password"
 
                                 label={<LockOutline fontSize={20}/>}
+
                                 rules={[{ required: true, message: "请输入密码!" }]}
                             >
                                 <Input.Password style={{width: "100%" ,height:"40px"}}   placeholder="请输入密码"/>
