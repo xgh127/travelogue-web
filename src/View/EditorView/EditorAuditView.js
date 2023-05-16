@@ -7,7 +7,7 @@ const EditorAuditView = () => {
 
     return(
         <Layout>
-            <Layout.header/>
+            <Layout.Header/>
             <AppContent children={<div>这是编辑页面</div>}/>
             <AppFooter/>
         </Layout>

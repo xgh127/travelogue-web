@@ -2,16 +2,32 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../CSS/Editor.css';
-import {Descriptions, Input, Menu, Space} from "antd";
+import {Descriptions, Input} from "antd";
 import PropTypes from "prop-types";
 import MultiSelect from "./MultiSelect";
 import ImageUploadButton from "./ImageUploadButton";
 import TextArea from "antd/es/input/TextArea";
+import {SelectProps} from "antd";
+const options: SelectProps['options'] = [
+    {label: '自然风光', value: '1'},
+    {label: '人文风光', value: '2'},
+    {label: '美食探索', value: '3'},
+    {label: '冒险探索', value: '4'},
+    {label: '城市探索', value: '5'},
+    {label: '历史遗迹', value: '6'},
+    {label: '自由行', value: '7'},
+    {label: '情侣出行', value: '8'},
+    {label: '家庭出行', value: '9'},
+    {label: '春季之旅', value: '10'},
+    {label: '夏季之旅', value: '11'},
+    {label: '秋季之旅', value: '12'},
+    {label: '冬季之旅', value: '13'},
+];
+const placeholder = '请选择标签';
 
 const Editor = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
-
 
     return (
         <div className="editor-container">
@@ -26,7 +42,11 @@ const Editor = () => {
                     <ReactQuill
                         theme="snow"
                         placeholder={'请输入正文'}
-                        value={value} onChange={setValue}
+                        value={value} onChange={(value) => {
+                            setValue(value);
+                            console.log("value"+value);
+                        }
+                    }
                         className='editor-placeholder'
                         formats={Editor.formats}
                         modules={{
@@ -55,8 +75,12 @@ const Editor = () => {
             <div className="editor-footer">
                         <Descriptions title={'发布设置'} >
 
-                   <Descriptions.Item label='标签选择' span={6}><MultiSelect/></Descriptions.Item>
-                       <Descriptions.Item label='封面图片'><ImageUploadButton/></Descriptions.Item>
+                   <Descriptions.Item label='标签选择' span={6}><MultiSelect
+                       placeholder={placeholder}
+                       options={options}/></Descriptions.Item>
+                       <Descriptions.Item label='封面图片'>
+                           <ImageUploadButton/>
+                       </Descriptions.Item>
                    <Descriptions.Item label='摘要'><TextArea rows={4}/></Descriptions.Item>
                         </Descriptions>
 

@@ -1,7 +1,7 @@
 // PersonalProfile.js
 
 import React from 'react';
-import './PersonalProfile.css';
+import '../CSS/PersonalProfile.css';
 
 const PersonalProfile = () => {
     // 用户信息数据
