@@ -1,0 +1,79 @@
+.travelogue-details-container {
+    max-width: 80%; /* 设置合适的最大宽度 */
+    margin: 0 auto; /* 居中显示 */
+    font-size: 20px;
+}
+.travelogue-info {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+}
+
+.avatar-title {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-title h2 {
+    margin-left: 8px;
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+}
+
+.stats span {
+    margin-right: 16px;
+}
+
+.tags {
+    display: flex;
+    align-items: center;
+}
+
+.tags span:not(:last-child) {
+    margin-right: 8px;
+}
+.comments-section {
+    margin-top: 20px;
+}
+
+.comments-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.ant-comment-content {
+    text-align: left;
+}
+
+.ant-comment-content-author {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.ant-comment-content-detail {
+    margin-top: 5px;
+}
+
+.ant-comment-content-author,
+.ant-comment-content-detail {
+    font-size: 16px;
+}
+
+.ant-comment-content-author img {
+    margin-right: 10px;
+}
+
+.tag-wrapper {
+    margin-top: 10px;
+}
+
+.tag-wrapper .ant-tag {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+

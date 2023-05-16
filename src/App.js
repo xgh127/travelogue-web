@@ -5,6 +5,7 @@ import EditorAuditView from "./View/EditorView/EditorAuditView";
 import LoginView from "./View/LoginView";
 import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
+import TravelogueDetailView from "./View/TraveloguDetailView";
 const routes = [
     {
         path: '/',
@@ -29,6 +30,11 @@ const routes = [
         path:'/textEditor',
         element: <TextEditorView/>,
 
+    },
+    {
+        path: '/travelogueDetail',
+        element: <TravelogueDetailView/>,
+        canActivate: (user) => !!user
     }
 ];
 function App() {
