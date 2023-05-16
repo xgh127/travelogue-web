@@ -62,7 +62,7 @@ const RegisterView = () => {
                                 </Form.Item>
                                 <Form.Item
                                     name="email"
-                                    rules={[{ required: true, message: "请输入邮箱!" }]}
+                                    rules={[]}
                                     label={<MailOutline fontSize={20}/>}
                                 >
                                     {/*增加输入框高度*/}
@@ -70,7 +70,7 @@ const RegisterView = () => {
                                 </Form.Item>
                                 <Form.Item
                                     name="telephone"
-                                    rules={[{ required: true, message: "请输入电话号码!" },
+                                    rules={[
                                             { pattern: new RegExp(/^1(3|4|5|6|7|8|9)\d{9}$/, "g"),
                                                 message: "请输入正确的手机号"}
                                           ]}
