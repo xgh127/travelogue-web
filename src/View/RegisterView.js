@@ -43,6 +43,7 @@ const LoginView = () => {
                                 <Form.Item
 
                                     name="password"
+
                                     label={<LockOutline fontSize={20}/>}
                                     rules={[{ required: true, message: "请输入密码!" }]}
                                 >
