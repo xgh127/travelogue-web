@@ -5,8 +5,7 @@ import { UserOutline, LockOutline} from 'antd-mobile-icons';
 import {useNavigate} from "react-router-dom";
 //引入src下Assets文件夹下的图片
 import background from "../Assets/background.jpg";
-import {getUserAuthByUserName} from "../Service/UserAuthService";
-import {loginCheck} from "../Service/UserService";
+import {getUserByUserName, loginCheck} from "../Service/UserService";
 import {Constant} from "../Utils/constant";
 
 const LoginView = (props) => {
@@ -15,19 +14,17 @@ const LoginView = (props) => {
     const onFinish = async (values) => {
         console.log("Received values of form: ", values);
 
-        let resp = await getUserAuthByUserName(values.Username);
+        let resp = await getUserByUserName(values.Username);
         let res = await loginCheck(values.Password,resp);
         if (res) {
-            // alert(JSON.stringify(resp))
 
-            let user = {
-                "UserName": resp.data[0].UserName,
-                "userType": resp.data[0].userType,
-            }
-            console.log("user here is："+user);
-            localStorage.setItem(Constant.USER, user);;
+            let user = JSON.stringify(resp.data[0]);
+            localStorage.setItem(Constant.USER, user);
             navigate("/", {});
-            setUser(user);
+            alert(user);
+            let userJson = JSON.parse(user);
+            // alert(userJson.UserAuth.userType);
+            setUser(userJson);
             message.success("登录成功");
         } else {
             message.error("密码错误");

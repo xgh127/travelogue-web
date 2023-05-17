@@ -25,12 +25,15 @@ const routes = [
     {
         path: '/editor/audit',
         element: <EditorAuditView/>,
-        canActivate: (user) => user &&  user.role === 1
+        canActivate: (user) => user
     },
     {
-        path:'/textEditor',
+        path:'/TextEditor',
         element: <TextEditorView/>,
-        canActivate: (user) => user &&  user.role === 1
+        canActivate: (user) => {
+            return user && user.UserAuth.userType === 1;
+
+        }
 
     },
     {
@@ -51,7 +54,7 @@ function App() {
         const checkUserStatus = () => {
             const storedUser = localStorage.getItem(Constant.USER);
             if (storedUser) {
-                setUser(storedUser);
+                setUser(JSON.parse(storedUser));
             } else {
                 setUser(null);
             }

@@ -47,7 +47,7 @@ export const loginCheck = async (rawPassword, resp) => {
         // alert(resp.data[0].password);
         try {
             const res = await new Promise((resolve, reject) => {
-                bcrypt.compare(rawPassword, resp.data[0].password, (err, result) => {
+                bcrypt.compare(rawPassword, resp.data[0].UserAuth.password, (err, result) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -63,6 +63,10 @@ export const loginCheck = async (rawPassword, resp) => {
     }
 
     return false;
+};
+export const getUserByUserName=(username)=>{
+    let url = "/User/?User.UserName=" + username;
+    return doGet(url)
 };
 
 export const logout=()=>
