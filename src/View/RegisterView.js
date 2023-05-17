@@ -1,29 +1,67 @@
-import {Button, Col, Form, Layout, Row, Input, Typography, Card, Divider, Avatar} from "antd";
+import {Button, Col, Form, Layout, Row, Input, Typography, Card} from "antd";
 import AppFooter from "../Component/Footer";
-import {UserOutline, LockOutline, MailOutline, PictureOutline, PhonebookOutline, PlusOutline} from 'antd-mobile-icons';
+import {UserOutline, LockOutline, MailOutline, PictureOutline, PhonebookOutline} from 'antd-mobile-icons';
 import {useNavigate} from "react-router-dom";
-import React, { useState, Component} from "react";
+import React from "react";
 //引入src下Assets文件夹下的图片
 import background from "../Assets/background.jpg";
 import InitalAvatar from "../Assets/InitalAvatar.jpg"
-
+import {doJSONPost, ip} from "../Utils/ajax";
+import {RegisterFailMsg, RegisterSuccessMsg} from "../Utils/Message";
+const bcrypt = require('bcryptjs');
 const RegisterView = () => {
-    const onFinish = (values) => {
-        console.log("Received values of form: ", values);
-        // Perform login logic here
-    };
     const navigate = useNavigate();
-    // const upChange = (event) => {
-    //     let imgfile = event.currentTarget.files[0];
-    //     console.log('我',imgfile)
-    //     // if(imgfile.size > )
-    //     let reader = new FileReader();
-    //     reader.readAsDataURL(imgfile)
-    //     reader.onload = function (event){
-    //         let  imgs = this.result
-    //
-    //     }
-    // }
+    const  onFinish = async (values) => {
+        console.log("Received values of form: ", values);
+        const rawPassword = values.password;
+        let hashedPassword = null;
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(rawPassword, salt, async function (err, hash) {
+                // Store hash in your password DB.
+                hashedPassword = hash;
+                console.log("hashed" + hashedPassword);
+                const userAuth = {
+                    "userType": 1,
+                    "password": hashedPassword,
+                    "UserName": values.username,
+                    "salt": "123",
+                };
+                bcrypt.compare(rawPassword,hashedPassword, function(err, res) {
+                    // res === true
+                    alert("是否一致"+res);
+                });
+                console.log("userAuth"+JSON.stringify(userAuth));
+                let res = await doJSONPost('/UserAuth', userAuth);
+                let authId = res.data.id;
+                const testUser1 = {
+                    "UserName": values.username,
+                    "Nickname": values.nickname,
+                    "emai": values.email,
+                    "telephone": values.telephone,
+                    "description": "add description",
+                    "UserAuth": {
+                        'id': authId,
+                    }
+                };
+                console.log(testUser1);
+                let resp = await doJSONPost('/User', testUser1);
+                // alert(JSON.stringify(resp));
+                if (resp.code === 0){
+                    RegisterSuccessMsg();
+                    navigate('/login');
+                }else{
+                    RegisterFailMsg();
+                }
+
+            });
+        });
+        bcrypt.compare(rawPassword,hashedPassword, function(err, res) {
+            // res === true
+            console.log(res);
+        });
+
+    };
+
     return(
         <Layout >
             <Layout.Header style={{zIndex:2}} />
@@ -104,7 +142,7 @@ const RegisterView = () => {
                                     <Input.Password style={{width: "100%" ,height:"40px"}} type={"password"}  placeholder="再次输入密码"/>
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button type="primary" htmlType="submit" style={{ width: "80%" }}>
+                                    <Button type="primary" htmlType="submit"  style={{ width: "80%" }} >
                                         注册
                                     </Button>
                                 </Form.Item>

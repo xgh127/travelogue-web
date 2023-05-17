@@ -7,24 +7,33 @@ import {
 import '../CSS/AppHeader.css';
 import 'antd/dist/reset.css';
 import SchoolLogo from '../Assets/schoolLogo.png';
+import {Constant} from "../Utils/constant";
+import {useNavigate} from "react-router-dom";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
-const menu = (
-    <div>
-        {/*    增加一个用户名，使其与Item对其*/}
-        <Menu>
-            <div className="user-name"><b>惜取少年时</b></div>
-            <Menu.Item key="1">个人信息</Menu.Item>
-            <Menu.Item key="2">通用设置</Menu.Item>
-            <Menu.Item key="3">内容管理</Menu.Item>
-            <Menu.Item key="4">退出登录</Menu.Item>
-        </Menu>
-    </div>
-);
+
 
 
 const LoginHeader = (props) => {
+    const navigate = useNavigate();
+    const menu = (
+        <div>
+            {/*    增加一个用户名，使其与Item对其*/}
+            <Menu>
+                <div className="user-name"><b>惜取少年时</b></div>
+                <Menu.Item key="1">个人信息</Menu.Item>
+                <Menu.Item key="2">通用设置</Menu.Item>
+                <Menu.Item key="3">内容管理</Menu.Item>
+                <Menu.Item key="4" onClick={
+                    ()=>{
+                        localStorage.removeItem(Constant.USER);
+                        navigate('/login');
+                    }
+                }>退出登录</Menu.Item>
+            </Menu>
+        </div>
+    );
     return (
         <Header className="app-header">
             <div className="logo" />

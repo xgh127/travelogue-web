@@ -1,16 +1,39 @@
-import {Button, Col, Form, Layout, Row, Input, Typography, Card, Divider} from "antd";
+import React from "react";
+import {Button, Col, Form, Layout, Row, Input, Typography, Card, Divider, message} from "antd";
 import AppFooter from "../Component/Footer";
 import { UserOutline, LockOutline} from 'antd-mobile-icons';
 import {useNavigate} from "react-router-dom";
 //引入src下Assets文件夹下的图片
 import background from "../Assets/background.jpg";
+import {getUserAuthByUserName} from "../Service/UserAuthService";
+import {loginCheck} from "../Service/UserService";
+import {Constant} from "../Utils/constant";
 
-const LoginView = () => {
-    const onFinish = (values) => {
-        console.log("Received values of form: ", values);
-        // Perform login logic here
-    };
+const LoginView = (props) => {
+    const { setUser } = props;
     const navigate = useNavigate();
+    const onFinish = async (values) => {
+        console.log("Received values of form: ", values);
+
+        let resp = await getUserAuthByUserName(values.Username);
+        let res = await loginCheck(values.Password,resp);
+        if (res) {
+            // alert(JSON.stringify(resp))
+
+            let user = {
+                "UserName": resp.data[0].UserName,
+                "userType": resp.data[0].userType,
+            }
+            console.log("user here is："+user);
+            localStorage.setItem(Constant.USER, user);;
+            navigate("/", {});
+            setUser(user);
+            message.success("登录成功");
+        } else {
+            message.error("密码错误");
+        }
+    };
+
     return(
         <Layout >
             <Layout.Header style={{zIndex:2}} />
@@ -25,7 +48,7 @@ const LoginView = () => {
                                 onFinish={onFinish}
                                 >
                             <Form.Item
-                                name="username"
+                                name="Username"
 
                                 rules={[{ required: true, message: "请输入用户名!" }]}
                                 label={<UserOutline fontSize={20}/>}
@@ -35,7 +58,7 @@ const LoginView = () => {
                             </Form.Item>
                             <Form.Item
 
-                                name="password"
+                                name="Password"
 
                                 label={<LockOutline fontSize={20}/>}
 
@@ -44,7 +67,7 @@ const LoginView = () => {
                                 <Input.Password style={{width: "100%" ,height:"40px"}}   placeholder="请输入密码"/>
                             </Form.Item>
                             <Form.Item>
-                                <Button type="primary" htmlType="submit" style={{ width: "80%" }}>
+                                <Button type="primary" htmlType="submit" style={{ width: "80%" }} >
                                     登录
                                 </Button>
                             </Form.Item>

@@ -1,11 +1,12 @@
-import {Layout, theme} from "antd";
+import React, {useEffect} from "react";
+import {Layout} from "antd";
 import AppHeader from "../Component/AppHeader";
 import AppFooter from "../Component/Footer";
 import {NoteList} from "../Component/Content/NoteList";
 import {AppContent} from "../Component/AppContent";
+import {useNavigate} from "react-router-dom";
 
-const HomeView = () => {
-
+const HomeView = (props) => {
 
     const notes = [
         {
@@ -92,12 +93,13 @@ const HomeView = () => {
         },
         // ...
     ];
-    return(
-        <Layout>
-            <AppHeader/>
-           <AppContent children={<NoteList notes={notes} />}/>
-            <AppFooter/>
-        </Layout>
-    )
+        return(
+            <Layout>
+                <AppHeader />
+                <AppContent children={<NoteList notes={notes} />}/>
+                <AppFooter/>
+            </Layout>
+        )
+
 }
 export default HomeView;
