@@ -1,22 +1,47 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Typography, Avatar, Tag, Form, Button} from 'antd';
 import {Comment} from "@ant-design/compatible";
 import "../CSS/TravelogueDetail.css";
 import {EyeOutline, HeartOutline} from "antd-mobile-icons";
 import TextArea from "antd/es/input/TextArea";
+import {doGet} from "../Utils/ajax";
+import {resp2Json} from "../Utils/Tool";
 const { Paragraph } = Typography;
 
 const TravelogueDetails = () => {
-    // 游记信息
-    const travelogueInfo = {
-        avatar: '                                              ',
-        title: '西湖游记',
+    const travelogueInfoInitial = {
+        Author:{Avatar: 'src/Assets/InitalAvatar.jpg'},
+        Title: '西湖游记',
         views: 100,
         likes: 50,
-        publishTime: '2023-5-16',
-        tags: ['自然风光', '春天'],
+        PublishTime: '2023-5-16',
+        Tag: ['自然风光', '春天'],
     };
+    //定义游记信息Hook
+    const  [travelogueInfo,setTravelogueInfo] = useState(travelogueInfoInitial);
 
+    //渲染组件时获取信息
+    useEffect(() => {
+       //从url获取参数id，url为 url+？id=xxx
+        const id = window.location.search.split('=')[1];
+        console.log("id:"+id);
+        const fetchData = async () => {
+
+            try {
+                const notesInfo = await doGet('/Travelogue/'+id);
+                // console.log("notesInfo111111111" + JSON.stringify(notesInfo));
+                const resp = resp2Json(notesInfo);
+                console.log("noteDetailInfo" + JSON.stringify(resp.data));
+                // alert("noteDetailInfo" + JSON.stringify(resp.data));
+                setTravelogueInfo(resp.data);
+            } catch (error) {
+                console.error("Failed to fetch note:", error);
+            }
+        };
+
+        fetchData();
+        //根据id获取游记信息
+    }, []);
     // 游记内容
     const travelogueContent = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库塔的交通还是非常方便的，在这里可以选择出租车、网约车（grab）或者包车。\n' +
         '\n' +
@@ -54,8 +79,8 @@ const TravelogueDetails = () => {
             <Card>
                 <div className="travelogue-info">
                     <div className="avatar-title">
-                        <Avatar src={travelogueInfo.avatar} alt="用户头像" />
-                        <h2 style={{fontSize:24}}>{travelogueInfo.title}</h2>
+                        <Avatar src={travelogueInfo.Author.Avatar?"src/Assets/InitalAvatar.jpg" :travelogueInfo.Author.Avatar} alt="用户头像" />
+                        <h2 style={{fontSize:24}}>{travelogueInfo.Title}</h2>
                     </div>
                     <div className="stats">
                         <div>
@@ -65,13 +90,16 @@ const TravelogueDetails = () => {
                         <div>
                             {/*增加爱心图标*/}
                             <HeartOutline style={{ marginRight: 5 }}/>
-                            <span>点赞量：{travelogueInfo.likes}</span>
+                            <span>点赞量：{0}</span>
                         </div>
-                        <span>发布时间：{travelogueInfo.publishTime}</span>
+                        <span>发布时间：{
+                            //如果时间为空，则显示默认时间
+                            travelogueInfo.PublishTime?travelogueInfo.PublishTime:'2021-01-01'
+                        }</span>
                         <span>
               标签：
-                            {travelogueInfo.tags.map(tag => (
-                                <Tag key={tag}  color={"geekblue"}>{tag}</Tag>
+                            {travelogueInfo.Tag.map(tag => (
+                                <Tag key={tag.Name}  color={"geekblue"}>{tag.Name}</Tag>
                             ))}
             </span>
                     </div>
@@ -81,7 +109,7 @@ const TravelogueDetails = () => {
             {/* 游记内容展示 */}
             <Card>
                 <Paragraph ellipsis={{ rows: 6, expandable: true, symbol: '展开' }}>
-                    <div style={{fontSize:20,textAlign:'left'}} dangerouslySetInnerHTML={{ __html: travelogueContent }} />
+                    <div style={{fontSize:20,textAlign:'left'}} dangerouslySetInnerHTML={{ __html: travelogueInfo.Content }} />
                 </Paragraph>
             </Card>
 
