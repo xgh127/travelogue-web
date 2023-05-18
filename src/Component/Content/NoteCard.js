@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, Avatar } from 'antd';
 import {EyeOutlined, HeartOutlined} from "@ant-design/icons";
 

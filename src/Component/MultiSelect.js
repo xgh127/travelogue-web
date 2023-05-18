@@ -1,28 +1,22 @@
 import React from 'react';
-import { Select} from 'antd';
-import type { SelectProps } from 'antd';
-//example from https://ant.design/components/select/#components-select-demo-multiple
-const options: SelectProps['options'] = [];
+import { Select } from 'antd';
 
-for (let i = 10; i < 36; i++) {
-    options.push({
-        label: i.toString(36) + i,
-        value: i.toString(36) + i,
-    });
-}
-const handleChange = (value: string[]) => {
-    console.log(`selected ${value}`);
-};
+const { Option } = Select;
 
-const MultiSelect: React.FC = (props) => (
-        <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '100%' }}
-            placeholder={props.placeholder}
-            onChange={handleChange}
-            options={props.options}
-        />
+const MultiSelect = ({ placeholder, options, onChange }) => (
+    <Select
+        mode="multiple"
+        allowClear
+        style={{ width: '100%' }}
+        placeholder={placeholder}
+        onChange={onChange}
+    >
+        {options.map((option) => (
+            <Option key={option.value} value={option.value}>
+                {option.label}
+            </Option>
+        ))}
+    </Select>
 );
 
-export default MultiSelect
+export default MultiSelect;

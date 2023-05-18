@@ -9,7 +9,7 @@ const { Paragraph } = Typography;
 const TravelogueDetails = () => {
     // 游记信息
     const travelogueInfo = {
-        avatar: 'https://img.wxcha.com/m00/90/a5/d1d167451213c94da52f7ddf31d8da3b.jpg',
+        avatar: '                                              ',
         title: '西湖游记',
         views: 100,
         likes: 50,

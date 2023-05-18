@@ -1,5 +1,6 @@
 // 游记列表组件
 import {List} from "antd";
+import React from "react";
 import {NoteCard} from "./NoteCard";
 
 export const NoteList = ({ notes }) => (

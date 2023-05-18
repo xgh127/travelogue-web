@@ -1,3 +1,4 @@
+import React from "react";
 import {Layout} from "antd";
 import {AppContent} from "../../Component/AppContent";
 import AppFooter from "../../Component/Footer";

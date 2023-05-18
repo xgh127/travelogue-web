@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# 交游记（基于手机的游记展示系统）
+- [交游记（基于手机的游记展示系统）](#交游记基于手机的游记展示系统)
+  - [项目简介](#项目简介)
+  - [项目背景](#项目背景)
+  - [流程及主要场景](#流程及主要场景)
+  - [实现技术架构](#实现技术架构)
+  - [数据模型](#数据模型)
+  - [算法逻辑](#算法逻辑)
+    - [1.密码加盐（password salting）](#1密码加盐password-salting)
+      - [算法概述](#算法概述)
+      - [算法实现](#算法实现)
+    - [2.基于物品的协同过滤算法(Item-Based Collaborative Filtering)](#2基于物品的协同过滤算法item-based-collaborative-filtering)
+      - [算法概述](#算法概述-1)
+      - [算法流程](#算法流程)
+      - [算法实现](#算法实现-1)
+  - [主要创新之处](#主要创新之处)
+  - [成员分工](#成员分工)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 项目简介
+&nbsp;&nbsp; &nbsp; &nbsp;  游记评阅系统为个人旅游文章的投稿、评审、评价及管理提供了一个网络平台。首先
+是用户通过该平台上传游记，编辑进行审稿，若最终确定通过则将游记发布在平台上，以
+供其他用户进行查阅及评价，平台管理员可以有统计分析分析等功能。
 
-## Available Scripts
+## 项目背景
+&nbsp;&nbsp; &nbsp; &nbsp;数据智能方向《智能大数据平台》基于RMP平台的小组作业，。
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 流程及主要场景
+&nbsp;&nbsp; &nbsp; &nbsp;游记泳道图如下：
+![游记泳道图](src/Assets/README/业务流程.jpg)
+## 实现技术架构
+- web端：React+Antd design
+- 后端 & 数据库：RMP平台
+- 移动端：待定
+## 数据模型
+&nbsp; &nbsp; &nbsp; &nbsp;见RMP元模型
+## 算法逻辑
+### 1.密码加盐（password salting）
+#### 算法概述
+- 密码加盐（password salting）是一种增强密码存储安全性的技术。它通过在用户密码的基础上添加一个随机生成的值（盐），然后将密码和盐一起进行哈希运算，生成最终的存储密码。
+- 密码加盐的目的是为了防止常见的密码攻击，特别是彩虹表攻击（rainbow table attack）。彩虹表是一种预先计算并存储大量密码哈希值的技术，攻击者可以使用彩虹表来快速破解存储的密码哈希。如果不使用盐值，相同的密码在哈希运算后会生成相同的哈希值，这使得彩虹表攻击变得非常有效。
+- 通过使用盐值，每个用户的密码哈希都将是唯一的，即使两个用户使用相同的密码，由于盐值的不同，生成的哈希值也会不同。这使得攻击者无法简单地使用预先计算好的彩虹表来破解密码。
+- 盐值通常是随机生成的，并且与每个用户的密码一起存储在数据库中。在验证用户登录时，系统会提取存储的盐值，并将其与用户输入的密码一起进行哈希运算，然后与数据库中存储的密码哈希进行比较来验证密码的正确性。
+#### 算法实现
+- 主要靠bcryptjs库实现
+- 安装：npm install bcryptjs
+- 引入：const bcrypt = require('bcryptjs');
+- 加盐：const salt = bcrypt.genSaltSync(10);
+- 加密：const hash = bcrypt.hashSync(password, salt);
+- 验证：const isMatch = bcrypt.compareSync(password, hash);
+- 详细代码见：src/View/RegisterView.js
+### 2.基于物品的协同过滤算法(Item-Based Collaborative Filtering)
+#### 算法概述
+- 基于物品的协同过滤算法通过计算不同用户对不同物品的评分获得物品间的关系，基于物品间的关系对用户进行相似物品的推荐，评分即代表用户对物品的态度和偏好。比如，用户A同时购买了物品x，y，那么说明x，y之间的相关度高，当用户B也购买了物品x时，那么可以预测B也可能买物品y。
+#### 算法流程
+- 1）根据用户与物品的喜好矩阵，构建用户–>物品的倒排（即倒查表）；
+- 2）构建物品与物品的共现矩阵；
+- 3）计算物品之间的相似度，即计算相似矩阵
+- 4）根据用户的历史记录，给用户推荐物品
+#### 算法实现
+拟实现基于物品的协同过滤算法，具体实现细节待定。
+## 主要创新之处
+- 1.采用密码加盐技术，提高用户密码安全性
+- 2.TODO
+## 成员分工
+| 成员  | 分工                                                                                                                            | 贡献度  |
+|-----|-------------------------------------------------------------------------------------------------------------------------------|------|
+| 徐国洪 | **文档**： 需求分析，需求分析文档撰写，数据库设计，架构文档主要撰写，说明文档编写；**功能实现**：1.页面路由导航，权限鉴定 2.ajax跨域异步通信  3.登录注册（密码加盐）功能实现,**页面设计**：主页，文本编辑页，登录页，游记详情页 | TODO |
+| 陈煜  | **文档**： 需求分析文档审核，软件架构文档部分撰写；**功能实现**：1.游记上传,**页面设计**：个人中心页，编辑（editor）页                                                        | TODO |
+| 闫涵  | **文档**： 需求分析文档审核，软件架构文档审核；**功能实现**：TODO，**页面设计**：注册页面，管理员页面                                                                   | TODO |
