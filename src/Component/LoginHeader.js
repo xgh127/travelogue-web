@@ -34,12 +34,17 @@ const LoginHeader = (props) => {
             </Menu>
         </div>
     );
+
+    const navigate1 = useNavigate();
+    const handleImageClick = () => {
+        navigate1('/');
+    };
     return (
         <Header className="app-header">
             <div className="logo" />
             <div className="navigation-links">
-             <img style={{marginLeft:"-480px"}} src={SchoolLogo} width={60} height={60}/>
-            </div>
+                    <img style={{marginLeft:"-480px"}} src={SchoolLogo} width={60} height={60} onClick={handleImageClick}/>
+                  </div>
             <div style={{textAlign:'center',marginRight:"150px"}}>
                 <h1 style={{color:'orange'}}>{props.title}</h1>
             </div>

@@ -12,3 +12,13 @@ export const  RegisterFailMsg=() =>
 {
     message.error("注册失败！请检查你的信息！");
 }
+
+export const  PostSuccessMsg=() =>
+{
+    message.success("发布成功！");
+}
+
+export const  PostFailMsg=() =>
+{
+    message.error("发布失败！请检查你的信息！");
+}
