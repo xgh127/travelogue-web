@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../CSS/Editor.css';
@@ -39,6 +39,10 @@ const Editor = () => {
         });
         setSelectedTags(selectedTagLabels);
     };
+
+    useEffect(() => {
+        console.log("选中的标签", selectedTags);
+    }, [selectedTags]);
 
     const handleAbstractChange = (e) => {
         setAbstract(e.target.value);
@@ -82,9 +86,9 @@ const Editor = () => {
             "Content": value,
             "abstract": abstract,
             "Status": 1,
-            // "Author": {
-            //     "id":id
-            // },
+            "Author": {
+                "id":id
+            },
             "Tag": tagIds.map((tagId) => {
                 return { "id": tagId };
             }),

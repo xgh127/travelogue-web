@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Table, Avatar, Image, Tabs, Form, Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import "../CSS/PersonalProfile.css";
+import {Constant} from "../Utils/constant";
+import {doGet} from "../Utils/ajax";
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -9,7 +11,36 @@ const { TabPane } = Tabs;
 const PersonalProfile = () => {
     const [activeTab, setActiveTab] = useState('published');
     const [editMode, setEditMode] = useState(false);
-    const [userType, setUserType] = useState('chiefeditor');
+    const [matched, setMatched] = useState('');
+
+    let user = localStorage.getItem(Constant.USER);
+    let userJson = JSON.parse(user);
+    let userType = userJson.UserAuth.userType;
+    let userid = userJson.id;
+
+    useEffect(() => {
+        getlogues();
+    }, []);
+
+    const getlogues = async () => {
+        try {
+            let resp = await doGet('/Travelogue');
+            // 在这里处理获取到的游记信息
+            if (resp.code === 0) {
+                for (const key in resp.data) {
+                    const matchedlogue = resp.data.filter((item) => item.Author.id === userid);
+                    setMatched(matchedlogue);
+                }
+                console.log(matched);
+                console.log(matched[0].abstract);
+                console.log(matched[0].Author.Nickname);
+            } else {
+                console.error('获取游记信息失败');
+            }
+        } catch (error) {
+            console.error('请求出错：', error);
+        }
+    }
 
     const notes = [
         {
@@ -20,7 +51,7 @@ const PersonalProfile = () => {
             likes: 10,
             comments: 5,
         },
-        // ... 其他笔记的数据
+
     ];
 
     const formItems = [
@@ -77,7 +108,7 @@ const PersonalProfile = () => {
     const handleTabChange = (key) => {
         setActiveTab(key);
     };
-if(userType == 'normal'){
+if(userType == 1){
     return (
         <div className="personal-profile">
             <div className="left-column">
@@ -97,9 +128,9 @@ if(userType == 'normal'){
                     ) : (
                         <div className="centered-info">
                             <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
                             </div>
-                            <h2>{notes[0].author.name}</h2>
+                            <h2>{userJson.Nickname}</h2>
                             <Button onClick={handleEdit}>编辑</Button>
                         </div>
                     )}
@@ -108,32 +139,32 @@ if(userType == 'normal'){
             <div className="right-column">
                 <Tabs activeKey={activeTab} onChange={handleTabChange}>
                     <TabPane tab="我发布的" key="published">
-                        <Table dataSource={notes} pagination={false}>
+                        <Table dataSource={matched} pagination={false}>
                             <Column
                                 title="封面"
-                                dataIndex="imageUrl"
-                                key="imageUrl"
-                                render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
+                                dataIndex="cover"
+                                key="cover"
+                                render={(cover) => <Image src={cover} alt="日志封面" width={100} />}
                             />
                             <Column
                                 title="标题"
-                                dataIndex="title"
-                                key="title"
+                                dataIndex="Title"
+                                key="Title"
                             />
                             <Column
                                 title="简介"
-                                dataIndex="summary"
-                                key="summary"
+                                dataIndex="abstract"
+                                key="abstract"
                             />
                             <Column
                                 title="获赞数"
-                                dataIndex="likes"
-                                key="likes"
+                                dataIndex="Likes"
+                                key="Likes"
                             />
                             <Column
                                 title="评论数"
-                                dataIndex="comments"
-                                key="comments"
+                                dataIndex="Comments"
+                                key="Comments"
                             />
                         </Table>
                     </TabPane>
@@ -147,7 +178,7 @@ if(userType == 'normal'){
     );
 }
 
-else if(userType == 'editor'){
+else if(userType == 2){
     return (
         <div className="personal-profile">
             <div className="left-column">
@@ -219,7 +250,7 @@ else if(userType == 'editor'){
         </div>
     );
     }
-else if(userType == 'chiefeditor'){
+else if(userType == 3){
     return (
         <div className="personal-profile">
             <div className="left-column">
