@@ -34,3 +34,25 @@
     bottom: 0;
     width: 100%;
 }
+
+.title {
+    margin-right: 1000px;
+}
+
+.sidebar {
+    overflow: auto;
+    height: 100vh;
+    position: sticky;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+}
+
+.content {
+    margin-left: 0px;
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    bottom: 0;
+}

@@ -8,8 +8,14 @@ import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
 import RegisterView from "./View/RegisterView";
 import TravelogueDetailView from "./View/TraveloguDetailView";
+<<<<<<< HEAD
+import AdministratorView from "./View/AdministratorView";
+import ManagerallView from "./View/ManagerallView";
+
+=======
 import {Constant} from "./Utils/constant";
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
+>>>>>>> 18386508e5ede8e237ec73581017c1eed5d7979b
 const routes = [
     {
         path: '/',
@@ -45,6 +51,14 @@ const routes = [
         path:'/register',
         element: <RegisterView/>,
     },
+    {
+        path:'/administrator',
+        element: <AdministratorView/>,
+    },
+    {
+        path: '/manager',
+        element: <ManagerallView/>,
+    }
 ];
 function App() {
     const [user, setUser] = useState(null);
