@@ -1,0 +1,117 @@
+
+{
+  "UserName": "userA"
+}
+{
+  "UserName": "userB"
+}
+{
+  "UserName": "userC"
+}
+{
+  "UserName": "userD"
+}
+{
+  "UserName": "userE"
+}
+{
+    "Title": "Title1",
+    "Content": "Content1",
+    "PublishTime": "2019-01-01T00:00:00",
+    "Status": 2,
+    "abstract": "abstract1",
+    "cover": "cover1"
+}
+{
+"Title": "Title2",
+"Content": "Content2",
+"PublishTime": "2019-01-02T00:00:00",
+"Status": 2,
+"abstract": "abstract2",
+"cover": "cover2"
+}
+{
+"Title": "Title3",
+"Content": "Content3",
+"PublishTime": "2019-01-03T00:00:00",
+"Status": 2,
+"abstract": "abstract3",
+"cover": "cover3"
+}
+{
+"Title": "Title4",
+"Content": "Content4",
+"PublishTime": "2019-01-04T00:00:00",
+"Status": 2,
+"abstract": "abstract4",
+"cover": "cover4"
+}
+{
+"Title": "Title5",
+"Content": "Content5",
+"PublishTime": "2019-01-05T00:00:00",
+"Status": 2,
+"abstract": "abstract5",
+"cover": "cover5"
+}
+//Like表
+{
+"UserId": 1,
+"TravelId": 1,
+}
+{
+"UserId": 1,
+"TravelId": 2,
+}
+{
+"UserId": 1,
+"TravelId": 4,
+}
+{
+"UserId": 1,
+“TravelId”: 5,
+}
+{
+"UserId": 2,
+"TravelId": 2,
+}
+{
+"UserId": 2,
+"TravelId": 3,
+}
+{
+"UserId": 2,
+"TravelId": 5,
+}
+{
+"UserId": 3,
+"TravelId": 3,
+}
+{
+"UserId": 3,
+"TravelId": 4,
+}
+{
+"UserId": 3,
+"TravelId": 5,
+}
+{
+"UserId": 4,
+"TravelId": 2,
+}
+{
+"UserId": 4,
+"TravelId": 3,
+}
+{
+"UserId": 4,
+"TravelId": 4,
+}
+{
+"UserId": 5,
+”TravelId”: 1,
+}
+{
+"UserId": 5,
+"TravelId": 4,
+}

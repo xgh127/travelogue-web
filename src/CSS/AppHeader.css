@@ -8,6 +8,8 @@
 }
 
 .navigation-links {
+    width: 20%;
+   position: relative;
     display: flex;
 }
 
@@ -17,6 +19,7 @@
 }
 
 .right-container {
+    position: relative;
     display: flex;
 }
 .TopButton{
