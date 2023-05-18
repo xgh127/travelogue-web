@@ -96,7 +96,7 @@ const HomeView = (props) => {
         return(
             <Layout>
                 <AppHeader />
-                <AppContent children={<NoteList notes={notes} />}/>
+                    <AppContent children={<NoteList notes={notes} />}/>
                 <AppFooter/>
             </Layout>
         )

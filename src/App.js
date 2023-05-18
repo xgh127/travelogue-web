@@ -32,7 +32,6 @@ const routes = [
         element: <TextEditorView/>,
         canActivate: (user) => {
             return user && user.UserAuth.userType === 1;
-
         }
 
     },
