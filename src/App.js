@@ -7,6 +7,8 @@ import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
 import RegisterView from "./View/RegisterView";
 import TravelogueDetailView from "./View/TraveloguDetailView";
+import AdministratorView from "./View/AdministratorView";
+import ManagerallView from "./View/ManagerallView";
 
 const routes = [
     {
@@ -43,6 +45,14 @@ const routes = [
         path:'/register',
         element: <RegisterView/>,
     },
+    {
+        path:'/administrator',
+        element: <AdministratorView/>,
+    },
+    {
+        path: '/manager',
+        element: <ManagerallView/>,
+    }
 ];
 function App() {
     const user = {
