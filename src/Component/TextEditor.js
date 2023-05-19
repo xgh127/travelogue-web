@@ -20,6 +20,9 @@ const options = [
 
 const placeholder = '请选择标签';
 
+const time = new Date();
+
+
 const Editor = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -93,6 +96,7 @@ const Editor = () => {
                 return { "id": tagId };
             }),
             "cover": imageUrl, // 添加图片信息
+            "PublishTime": time.toLocaleString(),
         };
 
         console.log("data", data); // 打印出json数据

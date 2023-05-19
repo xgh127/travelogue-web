@@ -34,12 +34,13 @@ export const doGet = async(url) => {
 export const doJSONPut = async(url, json) => {
     let opts = {
         method: "PUT",
+        mode: "cors",
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(json),
-        credentials: "include"
+        // credentials: "include"
     }
 
     let response = await fetch(ip + url, opts);
