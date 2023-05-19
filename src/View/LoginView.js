@@ -21,8 +21,11 @@ const LoginView = (props) => {
             let user = JSON.stringify(resp.data[0]);
             localStorage.setItem(Constant.USER, user);
             navigate("/", {});
-            alert(user);
+            // alert(user);
             let userJson = JSON.parse(user);
+            alert(userJson.id);
+            localStorage.setItem(Constant.USERID, userJson.id)
+
             // alert(userJson.UserAuth.userType);
             setUser(userJson);
             message.success("登录成功");

@@ -53,10 +53,23 @@ export const doDelete = async(url) => {
         headers: {
             Accept: 'application/json',
         },
-        credentials: "include"
+        // credentials: "include"
     }
 
     let response = await fetch(ip + url, opts);
+    let responseJSON = await response.json();
+    return responseJSON;
+}
+export const doRecommentGet = async(url) => {
+    let opts = {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+        },
+        // credentials: "include"
+    }
+
+    let response = await fetch(url, opts);
     let responseJSON = await response.json();
     return responseJSON;
 }

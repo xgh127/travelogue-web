@@ -8,10 +8,9 @@ import {
 import '../CSS/AppHeader.css';
 // import 'antd/dist/antd.css';
 import SearchBar from "./SearchBar";
-import {FloatButton} from "antd";
 import {useNavigate} from "react-router-dom";
-import {logout} from "../Service/UserService";
 import {Constant} from "../Utils/constant";
+import {ItemBased_Collaborative_Filtering} from "../Utils/recommendUtil";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -21,15 +20,35 @@ const navigationLinks = [
     {
         title: '首页',
         path: '/',
+        onClick: () => {
+            console.log('首页');
+            //获取协同过滤推荐结果
+
+        },
     },
     {
         title: '最新游记',
         path: '/latest-travelogue',
+        onClick: () => {
+            console.log('最新游记');
+        },
     },
     {
-        title: '最热门游记',
+        title: '最热游记',
         path: '/hottest-travelogue',
+        onClick: () => {
+            console.log('最热门游记');
+        },
     },
+    {
+        title: '推荐游记',
+        path: '/recommend',
+        onClick: () => {
+            console.log('推荐');
+            let recommendTravelIdList = ItemBased_Collaborative_Filtering(1);
+        },
+    }
+
 ];
 
 const AppHeader = () => {
@@ -55,7 +74,7 @@ const AppHeader = () => {
                 <div className="navigation-links">
                     <Menu theme="dark" mode="horizontal">
                     {navigationLinks.map((link) => (
-                        <Menu.Item key={link.path}>{link.title}</Menu.Item>
+                        <Menu.Item key={link.path} onClick={link.onClick} >{link.title}</Menu.Item>
                     ))}
                     </Menu>
                 </div>

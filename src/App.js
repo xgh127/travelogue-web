@@ -8,13 +8,11 @@ import TextEditorView from "./View/TextEditorView";
 import PersonCenterView from "./View/PersonalCenterView";
 import RegisterView from "./View/RegisterView";
 import TravelogueDetailView from "./View/TraveloguDetailView";
-
-import AdministratorView from "./View/AdministratorView";
 import ManagerallView from "./View/ManagerallView";
-
-
 import {Constant} from "./Utils/constant";
+import AdministratorView from "./View/AdministratorView";
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
+
 
 const routes = [
     {
@@ -78,7 +76,7 @@ function App() {
         // 在每次渲染时检查用户状态
         const interval = setInterval(() => {
             checkUserStatus();
-        }, 1000);
+        }, 500);
 
         return () => {
             clearInterval(interval); // 组件卸载时清除定时器

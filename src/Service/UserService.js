@@ -64,9 +64,10 @@ export const loginCheck = async (rawPassword, resp) => {
 
     return false;
 };
-export const getUserByUserName=(username)=>{
+export const getUserByUserName=async (username) => {
     let url = "/User/?User.UserName=" + username;
-    return doGet(url)
+    // alert("enter getUserByUserName")
+    return await doGet(url)
 };
 
 export const logout=()=>
