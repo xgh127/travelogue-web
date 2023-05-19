@@ -10,6 +10,7 @@ import '../CSS/AppHeader.css';
 import SearchBar from "./SearchBar";
 import {FloatButton} from "antd";
 import {useNavigate} from "react-router-dom";
+import {Constant} from "../Utils/constant";
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -26,7 +27,10 @@ const AdministratorHeader = () => {
                 <Menu.Item key="1" onClick={()=>{navigate('/personalCenter')}}>个人信息</Menu.Item>
                 <Menu.Item key="2">通用设置</Menu.Item>
                 <Menu.Item key="3">内容管理</Menu.Item>
-                <Menu.Item key="4">退出登录</Menu.Item>
+                <Menu.Item key="4" onClick={()=>{
+                    localStorage.removeItem(Constant.USER);
+                    navigate('/login');
+                }}>退出登录</Menu.Item>
             </Menu>
         </div>
     );

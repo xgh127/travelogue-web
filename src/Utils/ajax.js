@@ -42,9 +42,12 @@ export const doJSONPut = async(url, json) => {
         body: JSON.stringify(json),
         // credentials: "include"
     }
-
+    console.log(opts);
+    console.log(ip+url);
     let response = await fetch(ip + url, opts);
+    console.log(response);
     let responseJSON = await response.json();
+    console.log("response="+responseJSON);
     return responseJSON;
 }
 export const doDelete = async(url) => {
