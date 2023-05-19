@@ -3,7 +3,7 @@ import { Table, Avatar, Image, Tabs, Form, Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import "../CSS/PersonalProfile.css";
 import {Constant} from "../Utils/constant";
-import {doGet} from "../Utils/ajax";
+import {doGet, doJSONPut} from "../Utils/ajax";
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -42,49 +42,31 @@ const PersonalProfile = () => {
         }
     }
 
-    const notes = [
-        {
-            title: '西湖印象',
-            summary: '西泠印社坐落于孤山南麓、西泠桥畔，于方寸中藏万千气象，堪称西湖园林艺术的精华。',
-            imageUrl: 'https://pic3.zhimg.com/v2-d348949f4f1b98d153aaef1a1d01d0c2_b.webp?consumer=ZHI_MENG',
-            author: { name: '山川游客', avatarUrl: 'https://img.wxcha.com/m00/12/db/594dd9fb43029a58df9acc0e4591d94b.jpg' },
-            likes: 10,
-            comments: 5,
-        },
-
-    ];
-
-    const formItems = [
-        {
-            label: '昵称',
-            name: 'nickname',
-            rules: [{ required: true, message: '请输入昵称' }],
-        },
-        {
-            label: '电话',
-            name: 'phone',
-            rules: [{ required: true, message: '请输入电话号码' }],
-        },
-        {
-            label: '邮件',
-            name: 'email',
-            rules: [
-                { required: true, message: '请输入邮件地址' },
-                { type: 'email', message: '请输入有效的邮件地址' },
-            ],
-        },
-        // 添加其他基础信息的表单项
-    ];
-
     const [form] = Form.useForm();
 
-    const handleSubmit = (values) => {
-        console.log('表单提交的值:', values);
-        // 在此处处理表单提交的逻辑，例如更新个人资料
+    const handleSubmit = async (values) => {
+        // 在此处执行保存操作，可以将 values.phone、values.email 和 values.nickname 发送到服务器或执行其他逻辑
+        console.log('保存的电话号码:', values.telephone);
+        console.log('保存的邮件地址:', values.email);
+        console.log('保存的昵称:', values.Nickname);
+        userJson.Nickname = values.Nickname;
+        userJson.telephone = values.telephone;
+        userJson.emai = values.email;
+        console.log(userJson);
+        let resp =  await doJSONPut('/User/'+userid, userJson);
+        console.log(resp);
+        setEditMode(false);
+        form.resetFields();
     };
 
     const handleEdit = () => {
         setEditMode(true);
+        console.log(userJson.emai);
+        form.setFieldsValue({
+            Nickname: userJson.Nickname,
+            telephone: userJson.telephone,
+            email: userJson.emai,
+        });
     };
 
     const handleCancel = () => {
@@ -92,18 +74,6 @@ const PersonalProfile = () => {
         setEditMode(false);
     };
 
-    const renderFormItems = () => {
-        return formItems.map((item) => (
-            <Form.Item
-                key={item.name}
-                label={item.label}
-                name={item.name}
-                rules={item.rules}
-            >
-                <Input prefix={<UserOutlined />} disabled={!editMode} />
-            </Form.Item>
-        ));
-    };
 
     const handleTabChange = (key) => {
         setActiveTab(key);
@@ -116,10 +86,33 @@ if(userType == 1){
                     {editMode ? (
                         <Form form={form} onFinish={handleSubmit} className="form-container">
                             <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
                             </div>
-                            <h2>{notes[0].author.name}</h2>
-                            {renderFormItems()}
+                            <h2>{userJson.Nickname}</h2>
+                            <Form.Item
+                                label="昵称"
+                                name="Nickname"
+                                rules={[{ required: true, message: '请输入昵称' }]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
+                            <Form.Item
+                                label="电话"
+                                name="telephone"
+                                rules={[{ required: true, message: '请输入电话号码' }]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
+                            <Form.Item
+                                label="邮件"
+                                name="email"
+                                rules={[
+                                    { required: true, message: '请输入邮件地址' },
+                                    { type: 'email', message: '请输入有效的邮件地址' },
+                                ]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">保存</Button>
                                 <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
@@ -131,6 +124,8 @@ if(userType == 1){
                                 <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
                             </div>
                             <h2>{userJson.Nickname}</h2>
+                            <p>邮件：{userJson.emai}</p>
+                            <p>电话：{userJson.telephone}</p>
                             <Button onClick={handleEdit}>编辑</Button>
                         </div>
                     )}
@@ -180,16 +175,39 @@ if(userType == 1){
 
 else if(userType == 2){
     return (
-        <div className="personal-profile">
+       <div className="personal-profile">
             <div className="left-column">
                 <div className="user-info">
                     {editMode ? (
                         <Form form={form} onFinish={handleSubmit} className="form-container">
                             <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
                             </div>
-                            <h2>{notes[0].author.name}</h2>
-                            {renderFormItems()}
+                            <h2>{userJson.Nickname}</h2>
+                            <Form.Item
+                                label="昵称"
+                                name="Nickname"
+                                rules={[{ required: true, message: '请输入昵称' }]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
+                            <Form.Item
+                                label="电话"
+                                name="telephone"
+                                rules={[{ required: true, message: '请输入电话号码' }]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
+                            <Form.Item
+                                label="邮件"
+                                name="email"
+                                rules={[
+                                    { required: true, message: '请输入邮件地址' },
+                                    { type: 'email', message: '请输入有效的邮件地址' },
+                                ]}
+                            >
+                                <Input prefix={<UserOutlined />} disabled={!editMode} />
+                            </Form.Item>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">保存</Button>
                                 <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
@@ -198,13 +216,12 @@ else if(userType == 2){
                     ) : (
                         <div className="centered-info">
                             <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
                             </div>
-                            <h2>{notes[0].author.name}<strong>（编辑）</strong></h2>
-                            <p>待审核：{notes[0].likes}</p>
-                            <p>已通过：{notes[0].likes}</p>
-                            <p>未通过：{notes[0].likes}</p>
-                            <Button onClick={handleEdit}>编辑个人资料</Button>
+                            <h2>{userJson.Nickname}</h2>
+                            <p>邮件：{userJson.emai}</p>
+                            <p>电话：{userJson.telephone}</p>
+                            <Button onClick={handleEdit}>编辑</Button>
                         </div>
                     )}
                 </div>
@@ -212,7 +229,7 @@ else if(userType == 2){
             <div className="right-column">
                 <Tabs activeKey={activeTab} onChange={handleTabChange}>
                     <TabPane tab="待审核" key="pending">
-                        <Table dataSource={notes} pagination={false}>
+                        <Table dataSource={matched} pagination={false}>
                             <Column
                                 title="封面"
                                 dataIndex="imageUrl"
@@ -250,139 +267,139 @@ else if(userType == 2){
         </div>
     );
     }
-else if(userType == 3){
-    return (
-        <div className="personal-profile">
-            <div className="left-column">
-                <div className="user-info">
-                    {editMode ? (
-                        <Form form={form} onFinish={handleSubmit} className="form-container">
-                            <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{notes[0].author.name}</h2>
-                            {renderFormItems()}
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">保存</Button>
-                                <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
-                            </Form.Item>
-                        </Form>
-                    ) : (
-                        <div className="centered-info">
-                            <div className="avatar-container">
-                                <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{notes[0].author.name}<strong>（主编）</strong></h2>
-                            <p>待分配：{notes[0].likes}</p>
-                            <p>待审核：{notes[0].likes}</p>
-                            <p>已通过：{notes[0].likes}</p>
-                            <p>未通过：{notes[0].likes}</p>
-                            <Button onClick={handleEdit}>编辑个人资料</Button>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="right-column">
-                <Tabs activeKey={activeTab} onChange={handleTabChange}>
-                    <TabPane tab="待分配" key="pending">
-                        <Table dataSource={notes} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="imageUrl"
-                                key="imageUrl"
-                                render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="title"
-                                key="title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="summary"
-                                key="summary"
-                            />
-                            <Column
-                                title="审核状态"
-                                dataIndex="likes"
-                                key="likes"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="comments"
-                                key="comments"
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="已分配" key="allocated">
-                        <Table dataSource={notes} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="imageUrl"
-                                key="imageUrl"
-                                render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="title"
-                                key="title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="summary"
-                                key="summary"
-                            />
-                            <Column
-                                title="审核状态"
-                                dataIndex="likes"
-                                key="likes"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="comments"
-                                key="comments"
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="待审核" key="pending-review">
-                        <Table dataSource={notes} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="imageUrl"
-                                key="imageUrl"
-                                render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="title"
-                                key="title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="summary"
-                                key="summary"
-                            />
-                            <Column
-                                title="审核状态"
-                                dataIndex="likes"
-                                key="likes"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="comments"
-                                key="comments"
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="已通过" key="approved">
-                    </TabPane>
-                    <TabPane tab="未通过" key="rejected">
-                    </TabPane>
-                </Tabs>
-            </div>
-        </div>
-    );
-}
+// else if(userType == 3){
+//     return (
+//         <div className="personal-profile">
+//             <div className="left-column">
+//                 <div className="user-info">
+//                     {editMode ? (
+//                         <Form form={form} onFinish={handleSubmit} className="form-container">
+//                             <div className="avatar-container">
+//                                 <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+//                             </div>
+//                             <h2>{notes[0].author.name}</h2>
+//                             {renderFormItems()}
+//                             <Form.Item>
+//                                 <Button type="primary" htmlType="submit">保存</Button>
+//                                 <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
+//                             </Form.Item>
+//                         </Form>
+//                     ) : (
+//                         <div className="centered-info">
+//                             <div className="avatar-container">
+//                                 <Avatar src={notes[0].author.avatarUrl} alt="用户头像" size={80} />
+//                             </div>
+//                             <h2>{notes[0].author.name}<strong>（主编）</strong></h2>
+//                             <p>待分配：{notes[0].likes}</p>
+//                             <p>待审核：{notes[0].likes}</p>
+//                             <p>已通过：{notes[0].likes}</p>
+//                             <p>未通过：{notes[0].likes}</p>
+//                             <Button onClick={handleEdit}>编辑个人资料</Button>
+//                         </div>
+//                     )}
+//                 </div>
+//             </div>
+//             <div className="right-column">
+//                 <Tabs activeKey={activeTab} onChange={handleTabChange}>
+//                     <TabPane tab="待分配" key="pending">
+//                         <Table dataSource={notes} pagination={false}>
+//                             <Column
+//                                 title="封面"
+//                                 dataIndex="imageUrl"
+//                                 key="imageUrl"
+//                                 render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
+//                             />
+//                             <Column
+//                                 title="标题"
+//                                 dataIndex="title"
+//                                 key="title"
+//                             />
+//                             <Column
+//                                 title="简介"
+//                                 dataIndex="summary"
+//                                 key="summary"
+//                             />
+//                             <Column
+//                                 title="审核状态"
+//                                 dataIndex="likes"
+//                                 key="likes"
+//                             />
+//                             <Column
+//                                 title="审核意见"
+//                                 dataIndex="comments"
+//                                 key="comments"
+//                             />
+//                         </Table>
+//                     </TabPane>
+//                     <TabPane tab="已分配" key="allocated">
+//                         <Table dataSource={notes} pagination={false}>
+//                             <Column
+//                                 title="封面"
+//                                 dataIndex="imageUrl"
+//                                 key="imageUrl"
+//                                 render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
+//                             />
+//                             <Column
+//                                 title="标题"
+//                                 dataIndex="title"
+//                                 key="title"
+//                             />
+//                             <Column
+//                                 title="简介"
+//                                 dataIndex="summary"
+//                                 key="summary"
+//                             />
+//                             <Column
+//                                 title="审核状态"
+//                                 dataIndex="likes"
+//                                 key="likes"
+//                             />
+//                             <Column
+//                                 title="审核意见"
+//                                 dataIndex="comments"
+//                                 key="comments"
+//                             />
+//                         </Table>
+//                     </TabPane>
+//                     <TabPane tab="待审核" key="pending-review">
+//                         <Table dataSource={notes} pagination={false}>
+//                             <Column
+//                                 title="封面"
+//                                 dataIndex="imageUrl"
+//                                 key="imageUrl"
+//                                 render={(imageUrl) => <Image src={imageUrl} alt="日志封面" width={100} />}
+//                             />
+//                             <Column
+//                                 title="标题"
+//                                 dataIndex="title"
+//                                 key="title"
+//                             />
+//                             <Column
+//                                 title="简介"
+//                                 dataIndex="summary"
+//                                 key="summary"
+//                             />
+//                             <Column
+//                                 title="审核状态"
+//                                 dataIndex="likes"
+//                                 key="likes"
+//                             />
+//                             <Column
+//                                 title="审核意见"
+//                                 dataIndex="comments"
+//                                 key="comments"
+//                             />
+//                         </Table>
+//                     </TabPane>
+//                     <TabPane tab="已通过" key="approved">
+//                     </TabPane>
+//                     <TabPane tab="未通过" key="rejected">
+//                     </TabPane>
+//                 </Tabs>
+//             </div>
+//         </div>
+//     );
+// }
 }
 
 
