@@ -1,4 +1,4 @@
-import {doGet, doRecommentGet, ip} from "./ajax";
+import {doGet, doCommonGet, ip} from "./ajax";
 import {resp2Json} from "./Tool";
 
 //如果有人对这里是什么感兴趣的话，这是我自己创建的项目做的推荐算法的测试，需要有点赞表，但是还没排除用户已经浏览过的游记
@@ -12,7 +12,7 @@ const recommendUrl='http://202.120.40.86:14642/rmp-resource-service/project/6465
  */
 export const ItemBased_Collaborative_Filtering=async (targetUserId) => {
     //获取用户点赞数据
-    let Likes = await doRecommentGet(ip + '/Like');
+    let Likes = await doCommonGet(ip + '/Like');
     console.log("likes" + JSON.stringify(Likes.data));
     let likes = Likes.data;
     //为了防止TravelId不连续，构建一个TravelId的映射，将TravelId映射为连续的数字
@@ -51,8 +51,13 @@ export const ItemBased_Collaborative_Filtering=async (targetUserId) => {
         userTravelMap.get(mappedUserId).push(mappedTravelId);
     }
     //将倒排结果console出来
+
     for (let [key, value] of userTravelMap) {
         console.log(key + " " + value)
+    }
+    //如果用户没有任何点赞记录，则直接调用热门推荐算法
+    if (!userTravelMap.has(userIdMap.get(targetUserId))) {
+        return await ViewsRecommend(5);
     }
     //构建TravelId->userId的倒排
     let travelUserMap = new Map();
@@ -248,5 +253,14 @@ export const ViewsRecommend = async (N) => {
     for (let i = 0; i < ids.length; i++) {
         console.log(ids[i]);
     }
+    return ids;
+}
+/**
+ * TODO:根据时间推荐
+ * @returns {[]}
+ * @constructor
+ */
+export const TimeRecommend = () => {
+    let ids = [];
     return ids;
 }

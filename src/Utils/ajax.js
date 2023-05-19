@@ -60,7 +60,7 @@ export const doDelete = async(url) => {
     let responseJSON = await response.json();
     return responseJSON;
 }
-export const doRecommentGet = async(url) => {
+export const doCommonGet = async(url) => {
     let opts = {
         method: "GET",
         headers: {

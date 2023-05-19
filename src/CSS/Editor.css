@@ -78,6 +78,7 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+    position: relative;
 }
 
 .preview-button,
@@ -99,4 +100,9 @@
     background-color: #007bff;
     color: #fff;
 }
+.sensitive-button {
+    background-color: #c71212;
+    color: #fff;
+}
+
 
