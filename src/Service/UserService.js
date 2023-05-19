@@ -1,6 +1,7 @@
 import {doDelete, doGet, doJSONPost} from "../Utils/ajax";
 import {message} from "antd";
 import {Constant} from "../Utils/constant";
+import {resp2Json} from "../Utils/Tool";
 const bcrypt = require('bcryptjs');
 /**
  * 查询用户
@@ -69,6 +70,11 @@ export const getUserByUserName=async (username) => {
     // alert("enter getUserByUserName")
     return await doGet(url)
 };
+export const getUserByUserId=async (userId) => {
+    let url = '/User/'+ userId;
+    let resp =  await doGet(url);
+    return resp2Json(resp).data;
+};
 
 export const logout=()=>
 {
@@ -79,4 +85,7 @@ export const logout=()=>
 export const checkLogin=()=>{
     return localStorage.getItem(Constant.USER) !== null;
 
+};
+export const getLocalUser=()=>{
+    return JSON.parse(localStorage.getItem(Constant.USER));
 };
