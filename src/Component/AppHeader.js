@@ -1,5 +1,5 @@
-import React from 'react';
-import {Layout, Menu, Button, Avatar, Dropdown} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Layout, Menu, Button, Avatar, Dropdown, Space} from 'antd';
 import {
     CommentOutlined,
     PlusOutlined,
@@ -10,7 +10,7 @@ import '../CSS/AppHeader.css';
 import SearchBar from "./SearchBar";
 import {useNavigate} from "react-router-dom";
 import {Constant} from "../Utils/constant";
-import {ItemBased_Collaborative_Filtering} from "../Utils/recommendUtil";
+
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
@@ -73,7 +73,8 @@ const AppHeader = () => {
                     </div>
                     );
     return (
-        <Header className="app-header">
+        <Header className='app-header'>
+
             <div className="logo" />
                 <div className="navigation-links">
                     <Menu theme="dark" mode="horizontal">
@@ -81,14 +82,15 @@ const AppHeader = () => {
                         <Menu.Item  onClick={link.onClick} >{link.title}</Menu.Item>
                     ))}
                     </Menu>
-                </div>
-            <div className="search-box">
-                        <SearchBar className="SearchBar"
-                        />
-            </div>
-            <div className="right-container">
-                <Menu theme="dark" mode="horizontal">
 
+                </div>
+            <div style={{textAlign:'center',marginRight:"150px"}}>
+                <h1 style={{color:'orange'}}>交游记</h1>
+            </div>
+
+            <div className="right-container">
+
+                <Menu theme="dark" mode="horizontal">
                         <Button type="primary"  className="TopButton" icon={<PlusOutlined/>}
                         onClick={
                             ()=>{
@@ -109,7 +111,9 @@ const AppHeader = () => {
     />
                 </Menu>
             </div>
+
         </Header>
+
     );
 };
 
