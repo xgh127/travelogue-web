@@ -144,7 +144,7 @@ const TravelogueDetails = () => {
                         <span>
               标签：
                             {travelogueInfo.Tag.map(tag => (
-                                <Tag key={tag.Name}  color={"geekblue"}>{tag.Name}</Tag>
+                                <Tag  color={"geekblue"}>{tag.Name}</Tag>
                             ))}
             </span>
                     </div>

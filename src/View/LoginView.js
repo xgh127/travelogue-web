@@ -9,7 +9,7 @@ import {getUserByUserName, loginCheck} from "../Service/UserService";
 import {Constant} from "../Utils/constant";
 
 const LoginView = (props) => {
-    const { setUser } = props;
+    // const { setUser } = props;
     const navigate = useNavigate();
     const onFinish = async (values) => {
         console.log("Received values of form: ", values);
@@ -27,7 +27,7 @@ const LoginView = (props) => {
             localStorage.setItem(Constant.USERID, userJson.id)
 
             // alert(userJson.UserAuth.userType);
-            setUser(userJson);
+            // setUser(userJson);
             message.success("登录成功");
         } else {
             message.error("密码错误");

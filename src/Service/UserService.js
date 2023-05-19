@@ -76,3 +76,7 @@ export const logout=()=>
     console.log( localStorage.getItem(Constant.USER));
     message.success("删除localstorage，退出成功！");
 };
+export const checkLogin=()=>{
+    return localStorage.getItem(Constant.USER) !== null;
+
+};

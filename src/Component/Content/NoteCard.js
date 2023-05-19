@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Card, Avatar } from 'antd';
+import {Card, Avatar, Tag} from 'antd';
 import {EyeOutlined, HeartFilled, HeartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {doGet} from "../../Utils/ajax";
@@ -69,6 +69,14 @@ export const NoteCard = ({ note }) => {
                     <div>
                         <LikeButton />
                         <span>{likeNum}</span>
+                    </div>
+                {/*    显示游记标签*/}
+                    <div>
+                        <span>{note.Tag.map((tag) => {
+                            return (
+                                <Tag  color={"geekblue"}>{tag.Name}</Tag>
+                            );
+                        })}</span>
                     </div>
                 </div>
             </div>
