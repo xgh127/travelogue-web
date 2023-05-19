@@ -74,7 +74,7 @@ function App() {
         // 在每次渲染时检查用户状态
         const interval = setInterval(() => {
             checkUserStatus();
-        }, 1000);
+        }, 500);
 
         return () => {
             clearInterval(interval); // 组件卸载时清除定时器

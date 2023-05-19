@@ -18,12 +18,12 @@ const { SubMenu } = Menu;
 
 const navigationLinks = [
     {
-        title: '首页推荐',
+        title: '首页',
         path: '/',
         onClick: () => {
-            console.log('首页推荐');
+            console.log('首页');
             //获取协同过滤推荐结果
-            let recommendTravelIdList = ItemBased_Collaborative_Filtering(1);
+
         },
     },
     {
@@ -34,12 +34,21 @@ const navigationLinks = [
         },
     },
     {
-        title: '最热门游记',
+        title: '最热游记',
         path: '/hottest-travelogue',
         onClick: () => {
             console.log('最热门游记');
         },
     },
+    {
+        title: '推荐游记',
+        path: '/recommend',
+        onClick: () => {
+            console.log('推荐');
+            let recommendTravelIdList = ItemBased_Collaborative_Filtering(1);
+        },
+    }
+
 ];
 
 const AppHeader = () => {
