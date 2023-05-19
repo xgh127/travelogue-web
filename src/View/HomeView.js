@@ -7,6 +7,7 @@ import {AppContent} from "../Component/AppContent";
 import {useNavigate} from "react-router-dom";
 import {doGet} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
+import SearchBar from "../Component/SearchBar";
 
 const HomeView = (props) => {
     // const [Notes,setNotes]=useState([]);
@@ -121,6 +122,7 @@ const HomeView = (props) => {
         return(
             <Layout>
                 <AppHeader />
+
                     <AppContent children={<NoteList notes={notes} />}/>
                 <AppFooter/>
             </Layout>

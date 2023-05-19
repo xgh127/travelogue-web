@@ -1,10 +1,11 @@
-.SearchBar{
+.searchBar{
     width:30%;
     margin-top:15px;
-    /*//    设置其在父组件中的位置*/
-    position:absolute;
-    left:50%;
-    margin-left:-250px;
+      /*设置其在父组件中的位置*!*/
+    position:sticky;
+    /*控制其页面下滑的时候不动*/
+
+    left:30%;
     top:0;
     z-index:100;
 }

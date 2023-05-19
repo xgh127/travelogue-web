@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../CSS/Editor.css';
-import {Button, Card, Descriptions, Input, Tooltip} from "antd";
+import {Button, Card, Descriptions, Input, message, Space, Tooltip} from "antd";
 import PropTypes from "prop-types";
 import MultiSelect from "./MultiSelect";
 import { doJSONPost } from "../Utils/ajax";
@@ -14,8 +14,29 @@ import TextArea from "antd/es/input/TextArea";
 import {getSensitive, SensitiveWordsFilter} from "../Utils/Sensitive";
 
 const options = [
-    { label: 'nature', value: '1' },
+    { label: 'nature ', value: '1' },
     { label: 'view', value: '2' },
+    {
+        label: 'holiday getaway ',value: '3',
+    },
+    {
+        label: 'shopping mecca',value: '4',
+    },
+    {
+    label: 'Thrilling exploration',value: '5'
+    },
+    {
+     label: 'self-guided tour',value: '6'
+    },
+    {
+    label: 'spring outing',value: '7'
+    },
+    {
+        label: 'Ancient City and Town',value: '8'
+    },
+    {
+
+    }
     // ... 其他选项
 ];
 
@@ -132,11 +153,13 @@ const Editor = () => {
         <div className="editor-container">
             <div className="editor-header">
                 <div className="editor-title">
+                    <Tooltip title={'仅支持英文'}>
                     <Input type="text"
                            value={title}
                            onChange={handleTitleChange}
                            style={{ textAlign: 'center' }}
                            placeholder="请输入标题" />
+                    </Tooltip>
                 </div>
                 <div className="editor-toolbar">
                     <ReactQuill
@@ -177,26 +200,34 @@ const Editor = () => {
                         />
                     </Descriptions.Item>
                     <Descriptions.Item label='封面图片'>
+                        <Tooltip title={"注意图片名称不能有中文"}>
                         <input type="file" accept="image/*" onChange={handleImageUpload} />
                         {imageUrl && (
                             <img src={URL.createObjectURL(compressedImage)} alt="压缩后的图片" />
                         )}
+                        </Tooltip>
                     </Descriptions.Item>
+
                     <Descriptions.Item label='摘要'>
+                        <Tooltip title={'仅支持英文'}>
                         <TextArea rows={4} value={abstract} onChange={handleAbstractChange} />
+                            </Tooltip >
                     </Descriptions.Item>
+
                 </Descriptions>
 
                 <div className="preview-update-buttons">
+
                     <button className="preview-button">预览</button>
-                    <button className="update-button" onClick={handleSubmit}>更新</button>
+                    <button className="update-button" onClick={handleSubmit}>上传</button>
                     <Tooltip title="敏感词检测,将会把敏感词以**替换，请您发现后及时修改">
                     <button className="sensitive-button"
                             onClick={handleSensitiveCheck}
 
                     >敏感词检测
-                    )}</button>
+                    </button>
                         </Tooltip>
+
                 </div>
             </Card>
         </div>

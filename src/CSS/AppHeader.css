@@ -1,33 +1,221 @@
+/*!*.app-header {*!*/
+/*!*    position: sticky;*!*/
+/*!*    top: 0;*!*/
+/*!*    z-index: 1;*!*/
+/*!*    width: 100%;*!*/
+/*!*    display: flex;*!*/
+/*!*    justify-content: space-between;*!*/
+/*!*}*!*/
+
+/*!*.navigation-links {*!*/
+/*!*    width: 30%;*!*/
+/*!*   position: relative;*!*/
+/*!*    display: flex;*!*/
+/*!*}*!*/
+
+/*!*.search-box {*!*/
+/*!*    margin-left: auto;*!*/
+
+/*!*}*!*/
+
+/*!*.right-container {*!*/
+/*!*    position: relative;*!*/
+/*!*    display: flex;*!*/
+/*!*}*!*/
+/*!*.TopButton{*!*/
+/*!*    margin-top: 15px;*!*/
+/*!*!*    设置按钮之间的间距*!*!*/
+/*!*    margin-right: 20px;*!*/
+
+/*!*}*!*/
+/*.app-header {*/
+/*    position: sticky;*/
+/*    top: 0;*/
+/*    z-index: 1;*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
+
+/*.navigation-links {*/
+/*    width: 30%;*/
+/*    position: relative;*/
+/*    display: flex;*/
+/*}*/
+
+/*.search-box {*/
+/*    margin-left: auto;*/
+/*}*/
+
+/*.right-container {*/
+/*    position: relative;*/
+/*    display: flex;*/
+/*}*/
+
+/*@media (max-width: 767px) {*/
+/*    .app-header {*/
+/*        flex-wrap: wrap;*/
+/*    }*/
+
+/*    .navigation-links {*/
+/*        width: 100%;*/
+/*    }*/
+
+/*    .search-box {*/
+/*        width: 100%;*/
+/*        margin-top: 10px;*/
+/*    }*/
+
+/*    .right-container {*/
+/*        width: 100%;*/
+/*        justify-content: flex-end;*/
+/*    }*/
+/*}*/
+
+/*!*.app-header {*!*/
+/*!*    position: sticky;*!*/
+/*!*    top: 0;*!*/
+/*!*    z-index: 1;*!*/
+/*!*    width: 100%;*!*/
+/*!*    display: flex;*!*/
+/*!*    justify-content: space-between;*!*/
+/*!*    flex-wrap: wrap; !* 添加这一行，使元素自动换行 *!*!*/
+/*!*}*!*/
+/*!*.navigation-links {*!*/
+/*!*    width: 30%;*!*/
+/*!*    position: relative;*!*/
+/*!*    display: flex;*!*/
+/*!*    flex-wrap: wrap; !* 添加flex-wrap属性，使菜单项自动换行 *!*!*/
+/*!*}*!*/
+
+/*!*.navigation-links {*!*/
+/*!*    flex: 1; !* 修改为弹性布局，占据可用空间 *!*!*/
+/*!*    display: flex;*!*/
+/*!*}*!*/
+
+/*!*.search-box {*!*/
+/*!*    margin-left: auto;*!*/
+/*!*    flex: 1; !* 修改为弹性布局，占据可用空间 *!*!*/
+/*!*}*!*/
+/*.search-box {*/
+/*    margin-left: auto;*/
+/*    flex: 1;*/
+/*    display: flex;*/
+/*    align-items: center; !* 垂直居中对齐 *!*/
+/*}*/
+
+/*.SearchBar {*/
+/*    width: 100%; !* 设置搜索框宽度为100% *!*/
+/*    max-width: 300px; !* 设置搜索框最大宽度 *!*/
+/*    margin: 0 auto; !* 水平居中对齐 *!*/
+/*}*/
+
+
+/*.right-container {*/
+/*    display: flex;*/
+/*    align-items: center; !* 垂直居中对齐 *!*/
+/*}*/
+
+/*.TopButton {*/
+/*    margin-top: 15px;*/
+/*    margin-right: 20px;*/
+/*}*/
+
+
+/*.footer-wrapper {*/
+/*    position: fixed;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.title {*/
+/*    margin-right: 1000px;*/
+/*}*/
+
+/*.sidebar {*/
+/*    overflow: auto;*/
+/*    height: 100vh;*/
+/*    position: sticky;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+
+/*}*/
+
+/*.content {*/
+/*    margin-left: 0px;*/
+/*    overflow: auto;*/
+/*    position: sticky;*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+/*}*/
 .app-header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .navigation-links {
-    width: 30%;
-   position: relative;
-    display: flex;
+    flex-grow: 1;
 }
 
 .search-box {
-    margin-left: auto;
-
+    flex-grow: 2;
+    display: flex;
+    justify-content: center;
 }
 
 .right-container {
-    position: relative;
+    flex-grow: 1;
     display: flex;
+    justify-content: flex-end;
 }
-.TopButton{
-    margin-top: 15px;
-/*    设置按钮之间的间距*/
-    margin-right: 20px;
 
+
+/*@media (max-width: 767px) {*/
+/*    .app-header {*/
+/*        flex-wrap: wrap;*/
+/*    }*/
+
+/*    .navigation-links {*/
+/*        width: 100%;*/
+/*    }*/
+
+/*    .search-box {*/
+/*        width: 100%;*/
+/*        margin-top: 10px;*/
+/*    }*/
+
+/*    .right-container {*/
+/*        width: 100%;*/
+/*        justify-content: flex-end;*/
+/*    }*/
+/*}*/
+
+/*.search-box {*/
+/*    margin-left: auto;*/
+/*    flex: 1;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+.SearchBar {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
 }
+
+.right-container {
+    display: flex;
+    align-items: center;
+}
+
+.TopButton {
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
 .footer-wrapper {
     position: fixed;
     left: 0;
@@ -46,7 +234,6 @@
     left: 0;
     top: 0;
     bottom: 0;
-
 }
 
 .content {
@@ -55,4 +242,11 @@
     position: sticky;
     top: 0;
     bottom: 0;
+}
+
+.search-container {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
 }

@@ -41,7 +41,7 @@ const TravelogueDetails = () => {
             // alert("likerespJson:"+JSON.stringify(likerespJson));
             let likeInfo1 = likerespJson.data;
             // 更新游记信息，将点赞信息添加到游记信息中
-            travelogueInfo.PublishTime = JSON.stringify(new Date());
+            // travelogueInfo.PublishTime = JSON.stringify(new Date());
             travelogueInfo.Likes.push(likeInfo1);
             let res = await doJSONPut('/Travelogue/' + travelogueInfo.id, travelogueInfo);
             // alert("resToPut:"+JSON.stringify(res));

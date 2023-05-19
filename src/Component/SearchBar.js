@@ -15,13 +15,13 @@ const SearchBar: React.FC = () => {
     return(
 
         <div>
-            <Input.Group compact className="SearchBar" >
-                <Select  style={{ width: '20%',textAlign:'center'}} defaultValue="0" onChange={handleSearchTypeChange}>
+            <Input.Group compact className='searchBar' >
+                <Select  style={{ width: '30%',textAlign:'center'}} defaultValue="0" onChange={handleSearchTypeChange}>
                     <Option value="0" >按标题搜索</Option>
                     <Option value="1">按内容搜索</Option>
                     <Option value="2">按作者搜索</Option>
                 </Select>
-                <Search placeholder="input search text"   size={"middle"} style={{ width: '80%'}}   onSearch={(value) => console.log(value)}/>
+                <Search placeholder="input search text"   size={"middle"} style={{ width: '70%'}}   onSearch={(value) => console.log(value)}/>
             </Input.Group>
 
         </div>

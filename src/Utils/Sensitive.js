@@ -1,4 +1,4 @@
-import {doCommonGet, doGet} from "./ajax";
+import {doCommonGet} from "./ajax";
 import {resp2Json} from "./Tool";
 
 export  const sip = 'http://202.120.40.86:14642/rmp-resource-service/project/6467462e6da1a40015f121d9/resource'
