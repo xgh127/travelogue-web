@@ -11,6 +11,8 @@ import TravelogueDetailView from "./View/TraveloguDetailView";
 import AdministratorView from "./View/AdministratorView";
 import ManagerallView from "./View/ManagerallView";
 import {Constant} from "./Utils/constant";
+import CollaborativeFiltering from "./View/RecommendView/CollaborativeFiltering";
+import ViewsRecommendView from "./View/RecommendView/ViewsRecommend";
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 const routes = [
     {
@@ -43,6 +45,11 @@ const routes = [
         canActivate: (user) => !!user
     },
     {
+        path: '/CollaborativeFiltering',
+        element: <CollaborativeFiltering/>,
+        canActivate: (user) => !!user
+    },
+    {
 
         path:'/register',
         element: <RegisterView/>,
@@ -54,6 +61,11 @@ const routes = [
     {
         path: '/manager',
         element: <ManagerallView/>,
+    },
+    {
+        path:'/ViewsRecommend',
+        element: <ViewsRecommendView/>,
+        canActivate: (user) => !!user
     }
 ];
 function App() {

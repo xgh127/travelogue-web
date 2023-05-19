@@ -1,4 +1,5 @@
-import {doRecommentGet} from "./ajax";
+import {doGet, doRecommentGet, ip} from "./ajax";
+import {resp2Json} from "./Tool";
 
 //如果有人对这里是什么感兴趣的话，这是我自己创建的项目做的推荐算法的测试，需要有点赞表，但是还没排除用户已经浏览过的游记
 //参考网址：https://blog.csdn.net/qq_26274961/article/details/117881061，实现的是其中基于物品的协同过滤算法（Item-Based）
@@ -11,7 +12,7 @@ const recommendUrl='http://202.120.40.86:14642/rmp-resource-service/project/6465
  */
 export const ItemBased_Collaborative_Filtering=async (targetUserId) => {
     //获取用户点赞数据
-    let Likes = await doRecommentGet(recommendUrl + '/Like');
+    let Likes = await doRecommentGet(ip + '/Like');
     console.log("likes" + JSON.stringify(Likes.data));
     let likes = Likes.data;
     //为了防止TravelId不连续，构建一个TravelId的映射，将TravelId映射为连续的数字
@@ -156,7 +157,8 @@ export const ItemBased_Collaborative_Filtering=async (targetUserId) => {
     //计算targetUserId的推荐TravelId
     let mUserID = userIdMap.get(targetUserId);
     let recommendVector = userScoreMap.get(mUserID);
-    console.log("targetUserId的评分向量:" + recommendVector)
+    console.log("targetUserId="+targetUserId+" mUserID="+mUserID);
+    console.log("targetUserId的评分向量:" + recommendVector);
     //除开targetUserId已经点赞的TravelId
     let recommendTravelIds = [];
     //获取targetUserId已经点赞的TravelId
@@ -183,14 +185,68 @@ export const ItemBased_Collaborative_Filtering=async (targetUserId) => {
     recommendTravelIds.sort(function (a, b) {
         return b.score - a.score;
     })
-    //输出结果
     console.log("推荐结果:")
     for (let i = 0; i < recommendTravelIds.length; i++) {
-        console.log(travelIdMap.get(recommendTravelIds[i].TravelId) + " " + recommendTravelIds[i].score)
+        console.log(recommendTravelIds[i].TravelId + " " + recommendTravelIds[i].score)
     }
-    //将结果map成TravelId
+    //将recommendTravelIds中的TravelId反向映射回去，即通过value找到key
+    //存放反向映射后的travelId和score
+    let ans = new Map();
     for (let i = 0; i < recommendTravelIds.length; i++) {
-        recommendTravelIds[i] = travelIdMap.get(recommendTravelIds[i].TravelId);
+        for (let [key, value] of travelIdMap) {
+            if (value === recommendTravelIds[i].TravelId) {
+
+                ans[i] = {key: key, value: recommendTravelIds[i].score};
+            }
+        }
     }
-    return recommendTravelIds;
+    //s输出反向映射后的结果
+    console.log("反向映射后的推荐结果:")
+    for (let i = 0; i < recommendTravelIds.length; i++) {
+        console.log(ans[i].key + " " + ans[i].value);
+    }
+    let ids = [];
+    for (let i = 0; i < recommendTravelIds.length; i++) {
+        ids.push(ans[i].key);
+    }
+
+    return ids;
+}
+/**
+ * 根据浏览次数推荐
+ * @constructor
+ */
+export const ViewsRecommend = async (N) => {
+    let data = await doGet('/History');
+    let historyInfo = resp2Json(data).data;
+
+    let travelViews = new Map();
+    for (let history of historyInfo) {
+        if (!travelViews.has(history.TravelId)) {
+            travelViews.set(history.TravelId, 1);
+        } else {
+            travelViews.set(history.TravelId, travelViews.get(history.TravelId) + 1);
+        }
+    }
+
+    let travelViewsArr = [];
+    for (let [key, value] of travelViews) {
+        travelViewsArr.push({ TravelId: key, views: value });
+    }
+    //输出
+    console.log("浏览次数:");
+    for (let i = 0; i < travelViewsArr.length; i++) {
+        console.log(travelViewsArr[i].TravelId + " " + travelViewsArr[i].views);
+    }
+
+    let ids = [];
+    for (let i = 0; i < Math.min(N, travelViewsArr.length); i++) {
+        ids.push(travelViewsArr[i].TravelId);
+    }
+    //输出ids
+    console.log("推荐结果:");
+    for (let i = 0; i < ids.length; i++) {
+        console.log(ids[i]);
+    }
+    return ids;
 }
