@@ -19,13 +19,14 @@ import ManagerNotesAllView from "./View/ManagerNotesAllView";
 import SearchResultView from "./View/SearchResultView";
 import {checkLogin} from "./Service/UserService";
 import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
+import AdminDataView from "./View/AdminDataView";
 
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
 
 const routes = [
     {
-        path: '/first',
+        path: '/',
         element: <HomeView />,
         canActivate: checkLogin
     },
@@ -82,6 +83,9 @@ const routes = [
         path:'/SearchResult',
         element: <SearchResultView/>,
         canActivate: checkLogin
+    },{
+        path: '/AdminData',
+        element: <AdminDataView/>,
     }
 ];
 function App() {

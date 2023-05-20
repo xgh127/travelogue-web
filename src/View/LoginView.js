@@ -25,7 +25,7 @@ const LoginView = (props) => {
             let userJson = JSON.parse(user);
             alert(userJson.id);
             localStorage.setItem(Constant.USERID, userJson.id)
-            navigate("/first");
+            navigate("/");
             // alert(userJson.UserAuth.userType);
             // setUser(userJson);
           // if (userJson.UserAuth.userType === 1) {

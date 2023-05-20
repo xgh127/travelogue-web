@@ -146,6 +146,7 @@ const PersonalProfile = () => {
         console.log(record);
         let resp = await doJSONPut('/Travelogue/' + record.id, record);
         console.log(resp);
+        window.location.reload()
     }
     const navigate = useNavigate();
 
