@@ -315,6 +315,15 @@ if(userType == 1){
                                     return status;
                                 }}
                             />
+                            <Column
+                                title="审核意见"
+                                dataIndex="content"
+                                key="content"
+                                render={(value, record) =>(
+                                    console.log(record),
+                                        <span>{record.AuditSuggestions[0]?.Content}</span>
+                                )}
+                            />
                         </Table>
                     </TabPane>
                     <TabPane tab="喜欢" key="liked">
