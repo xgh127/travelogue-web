@@ -23,13 +23,13 @@ const options = [
         label: 'shopping mecca',value: '4',
     },
     {
-    label: 'Thrilling exploration',value: '5'
+        label: 'Thrilling exploration',value: '5'
     },
     {
-     label: 'self-guided tour',value: '6'
+        label: 'self-guided tour',value: '6'
     },
     {
-    label: 'spring outing',value: '7'
+        label: 'spring outing',value: '7'
     },
     {
         label: 'Ancient City and Town',value: '8'
@@ -171,9 +171,51 @@ const Editor = () => {
         // 从URL或路由参数中获取游记ID
         const travelogueId = window.location.search.split('=')[1];// 从URL或路由参数中获取游记ID的逻辑，例如：props.match.params.travelogueId;
 
-            // 调用获取游记信息的函数
-            fetchTravelogue(travelogueId);
+        // 调用获取游记信息的函数
+        fetchTravelogue(travelogueId);
     }, []);
+
+    const handleLogueChange = async () =>{
+        // 处理标签
+        const tagIds = [];
+        for (const selectedTag of selectedTags) {
+            const data = {
+                "Name": selectedTag,
+            };
+            let res = await doJSONPost('/Tag', data);
+            console.log(res);
+            let tagId = res.data.id;
+            tagIds.push(tagId);
+            console.log(tagIds);
+        };
+
+        let user = localStorage.getItem(Constant.USER);
+        let id = JSON.parse(user).id;
+        const data = {
+            "Title": title,
+            "Content": value,
+            "abstract": abstract,
+            "Status": 1,
+            "Author": {
+                "id":id
+            },
+            "Tag": tagIds.map((tagId) => {
+                return { "id": tagId };
+            }),
+            "cover": imageUrl, // 添加图片信息
+            "PublishTime": time,
+        };
+        const travelogueId = window.location.search.split('=')[1];
+        console.log("data", data); // 打印出json数据
+        let resp = await doJSONPut('/Travelogue/' + travelogueId, data);
+        console.log(resp);
+        if (resp.code === 0) {
+            PostSuccessMsg();
+        } else {
+            PostFailMsg();
+        }
+        tagIds.length = 0;
+    }
 
     const handleSave = async () =>{
         // 处理标签
@@ -222,11 +264,11 @@ const Editor = () => {
             <div className="editor-header">
                 <div className="editor-title">
                     <Tooltip title={'仅支持英文'}>
-                    <Input type="text"
-                           value={title}
-                           onChange={handleTitleChange}
-                           style={{ textAlign: 'center' }}
-                           placeholder="请输入标题" />
+                        <Input type="text"
+                               value={title}
+                               onChange={handleTitleChange}
+                               style={{ textAlign: 'center' }}
+                               placeholder="请输入标题" />
                     </Tooltip>
                 </div>
                 <div className="editor-toolbar">
@@ -260,41 +302,40 @@ const Editor = () => {
 
             <Card className="editor-footer">
                 <Descriptions title={'发布设置'}>
-                    <Descriptions.Item label='标签选择' span={6}>
+                    <Descriptions.Item label='更新标签' span={6}>
                         <MultiSelect
                             placeholder={placeholder}
                             options={options}
                             onChange={handleTagChange}
                         />
                     </Descriptions.Item>
-                    <Descriptions.Item label='封面图片'>
+                    <Descriptions.Item label='修改封面'>
                         <Tooltip title={"注意图片名称不能有中文"}>
-                        <input type="file" accept="image/*" onChange={handleImageUpload} />
-                        {imageUrl && (
-                            <img src={URL.createObjectURL(compressedImage)} alt="压缩后的图片" />
-                        )}
+                            <input type="file" accept="image/*" onChange={handleImageUpload} />
+                            {imageUrl && (
+                                <img src={URL.createObjectURL(compressedImage)} alt="压缩后的图片" />
+                            )}
                         </Tooltip>
                     </Descriptions.Item>
 
                     <Descriptions.Item label='摘要'>
                         <Tooltip title={'仅支持英文'}>
-                        <TextArea rows={4} value={abstract} onChange={handleAbstractChange} />
-                            </Tooltip >
+                            <TextArea rows={4} value={abstract} onChange={handleAbstractChange} />
+                        </Tooltip >
                     </Descriptions.Item>
 
                 </Descriptions>
 
                 <div className="preview-update-buttons">
-
                     <button className="preview-button" onClick={handleSave}>保存</button>
-                    <button className="update-button" onClick={handleSubmit}>上传</button>
+                    <button className="update-button" onClick={handleLogueChange}>修改并上传</button>
                     <Tooltip title="敏感词检测,将会把敏感词以**替换，请您发现后及时修改">
-                    <button className="sensitive-button"
-                            onClick={handleSensitiveCheck}
+                        <button className="sensitive-button"
+                                onClick={handleSensitiveCheck}
 
-                    >敏感词检测
-                    </button>
-                        </Tooltip>
+                        >敏感词检测
+                        </button>
+                    </Tooltip>
 
                 </div>
             </Card>
