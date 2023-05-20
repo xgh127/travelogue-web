@@ -13,7 +13,7 @@ export const NoteList = ({ notes }) => (
             grid={{ gutter: 16, column: 3 }}
             dataSource={notes}
             renderItem={(note) => (
-                <List.Item key={note.id}>
+                <List.Item key={note.id} >
                     <NoteCard note={note} />
                 </List.Item>
             )}

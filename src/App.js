@@ -18,6 +18,7 @@ import ManagerNotesAllView from "./View/ManagerNotesAllView";
 // import AdministratorView from "./View/AdministratorView";
 import SearchResultView from "./View/SearchResultView";
 import {checkLogin} from "./Service/UserService";
+import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
 
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
@@ -70,6 +71,11 @@ const routes = [
     {
         path:'/ViewsRecommend',
         element: <ViewsRecommendView/>,
+        canActivate: checkLogin
+    },
+    {
+      path: '/LatestRecommend',
+        element: <LatestRecommendView/>,
         canActivate: checkLogin
     },
     {

@@ -260,7 +260,22 @@ export const ViewsRecommend = async (N) => {
  * @returns {[]}
  * @constructor
  */
-export const TimeRecommend = () => {
-    let ids = [];
-    return ids;
+export const LatestRecommend = async (K) => {
+    //获取所有的Travelogue
+    let data = await doGet('/Travelogue');
+    let Travelogues = resp2Json(data).data;
+    //将字符串的new Date()转换为时间戳
+    for (let i = 0; i < Travelogues.length; i++) {
+        Travelogues[i].PublishTime = new Date(Travelogues[i].PublishTime).getTime();
+    }
+    //将Travelogue按照时间从大到小排序
+    Travelogues.sort(function (a, b) {
+        return b.PublishTime - a.PublishTime;
+    })
+    //直接返回前K个Travelogue的内容
+    let lattestTravelogues = [];
+    for (let i = 0; i < Math.min(K, Travelogues.length); i++) {
+        lattestTravelogues.push(Travelogues[i]);
+    }
+    return lattestTravelogues;
 }

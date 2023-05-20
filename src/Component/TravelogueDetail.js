@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Typography, Avatar, Tag, Form, Button, message} from 'antd';
+import {Card, Typography, Avatar, Tag, Form, Button, message, Tooltip} from 'antd';
 import {Comment} from "@ant-design/compatible";
 import "../CSS/TravelogueDetail.css";
 import {EyeOutline, HeartOutline} from "antd-mobile-icons";
 import TextArea from "antd/es/input/TextArea";
 import {doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
-import {HeartFilled, HeartOutlined} from "@ant-design/icons";
+import {HeartFilled, HeartOutlined, SmileOutlined} from "@ant-design/icons";
 import {Constant} from "../Utils/constant";
 import {getLocalUser, getUserByUserId} from "../Service/UserService";
 const { Paragraph } = Typography;
@@ -213,7 +213,9 @@ const TravelogueDetails = () => {
                     {/* 添加评论的输入框 */}
                     <Form onFinish={handleAddComment}>
                         <Form.Item name="comment">
-                            <TextArea rows={4} placeholder="写下你的评论" />
+                            <Tooltip title="评论仅支持英文">
+                            <TextArea rows={4} placeholder="善言结善缘，恶语伤人心！" />
+                            </Tooltip>
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">提交评论</Button>

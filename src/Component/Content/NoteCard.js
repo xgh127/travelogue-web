@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Avatar, Tag} from 'antd';
+import {Card, Avatar, Tag, Space} from 'antd';
 import {EyeOutlined, HeartFilled, HeartOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {doGet} from "../../Utils/ajax";
@@ -52,32 +52,38 @@ export const NoteCard = ({ note }) => {
         //根据id获取游记信息
     }, []);
     return (
-        <Card style={{ display: 'flex' }} onClick={()=>{navigate('/travelogueDetail?id='+note.id)}}>
+        <Card style={{ display: 'flex', }} bordered={true}  onClick={()=>{navigate('/travelogueDetail?id='+note.id)}} hoverable={true}>
             <div style={{ flex: 1, marginRight: 16 }}>
                 <img alt="example" style={{ width: '100%' }} src={note.cover} />
             </div>
             <div style={{ flex: 2 }}>
                 <h3>{note.Title}</h3>
                 <p>{note.abstract}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', alignItems: 'center',flexDirection: 'column' }}>
+                    <Card>
                     <Avatar src={note.Author.Avatar} />
                     <span><b>{note.Author.UserName}</b></span>
+                        </Card>
                     <div>
+                        <Space size={'small'}>
                         <EyeOutlined style={{ marginRight: 5 }} />
-                        <span>{viewNum}</span>
-                    </div>
-                    <div>
-                        <LikeButton />
+                        <span row={4}>{viewNum}</span>
+                        <LikeButton style={{ marginRight: 5 }}/>
                         <span>{likeNum}</span>
+                            <div>
+                                <span style={{ marginLeft: 10 }}>标签：</span>
+                                {note.Tag.map((tag) => {
+                                    return (
+                                        <Tag  color={"geekblue"}>{tag.Name}</Tag>
+                                    );
+                                })}
+                            </div>
+                        </Space>
                     </div>
                 {/*    显示游记标签*/}
-                    <div>
-                        <span>{note.Tag.map((tag) => {
-                            return (
-                                <Tag  color={"geekblue"}>{tag.Name}</Tag>
-                            );
-                        })}</span>
-                    </div>
+
+                </div>
                 </div>
             </div>
         </Card>
