@@ -203,6 +203,9 @@ const ManagerNotesAll = () => {
         {
             title: '游记汇总',
             path: '/managernotesall'
+        } ,{
+            title: '数据统计',
+            path: '/AdminData'
         }
     ];
 

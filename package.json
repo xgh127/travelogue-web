@@ -6,7 +6,12 @@
   "dependencies": {
     "@ant-design/compatible": "^5.1.1",
     "@ant-design/icons": "^5.0.1",
-    "@pengchen/xlsx": "^0.0.6",
+    "@pengchen/xlsx": "^0.0.6"
+  },
+  "dependencies": {
+    "@ant-design/compatible": "^5.1.1",
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/plots": "^1.2.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -30,7 +35,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

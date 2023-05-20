@@ -15,6 +15,7 @@ const PersonalProfile = () => {
     const [activeTab, setActiveTab] = useState('published');
     const [editMode, setEditMode] = useState(false);
     const [matched, setMatched] = useState('');
+    const [saved, setSaved] = useState('');
     const [status1, setstatus1] = useState([]);//储存status为0的文章
     const [status2, setstatus2] = useState([]);
     const [status3, setstatus3]= useState([]);
@@ -82,10 +83,12 @@ const PersonalProfile = () => {
             // 在这里处理获取到的游记信息
             if (resp.code === 0) {
                 for (const key in resp.data) {
-                    const matchedlogue = resp.data.filter((item) => item.Author.id === userid);
+                    const matchedlogue = resp.data.filter((item) => item.Author.id === userid && item.Status !== 0);
+                    const matchedsaved = resp.data.filter((item) => item.Author.id === userid && item.Status === 0);
                     setMatched(matchedlogue);
+                    setSaved(matchedsaved);
                 }
-                // console.log(matched);
+                console.log(matched);
                 // console.log(matched[0].abstract);
                 // console.log(matched[0].Author.Nickname);
             } else {
@@ -146,6 +149,8 @@ const PersonalProfile = () => {
         console.log(record);
         let resp = await doJSONPut('/Travelogue/' + record.id, record);
         console.log(resp);
+        window.location.reload()
+
     }
     const navigate = useNavigate();
 
@@ -154,7 +159,7 @@ const PersonalProfile = () => {
     }
 
     const handleLogueChange = (id) =>{
-        navigate('/TextEditor?id='+id);
+        navigate('/TextChange?id='+id);
     }
     useEffect(() => {
         getLikes();
@@ -218,6 +223,10 @@ const PersonalProfile = () => {
         } catch (error) {
             console.error('请求出错：', error);
         }
+    }
+
+    const getDetail = async (id) =>{
+        navigate('/travelogueDetail?id=' + id);
     }
 
 
@@ -288,7 +297,7 @@ if(userType == 1){
                                         src={imageUrl}
                                         alt="日志封面"
                                         width={100}
-                                        onClick={() => handleLogueChange(record.id)}
+                                        onClick={() => getDetail(record.id)}
                                     />
                                 )}
                             />
@@ -324,7 +333,6 @@ if(userType == 1){
                                     else if(status === 5){
                                         return "被撤回"
                                     }
-                                    return status;
                                 }}
                             />
                             <Column
@@ -334,6 +342,44 @@ if(userType == 1){
                                 render={(value, record) =>(
                                     // console.log(record),
                                         <span>{record.AuditSuggestions[0]?.Content}</span>
+                                )}
+                            />
+                            <Column
+                                title="修改游记"
+                                render={(record) => (
+                                    <button onClick={() => handleLogueChange(record.id)}>修改</button>
+                                )}
+                            />
+                        </Table>
+                    </TabPane>
+                    <TabPane tab="草稿箱" key="saved">
+                        <Table dataSource={saved} pagination={false}>
+                            <Column
+                                title="封面"
+                                dataIndex="cover"
+                                key="cover"
+                                render={(imageUrl,record) => (
+                                    <Image
+                                        src={imageUrl}
+                                        alt="日志封面"
+                                        width={100}
+                                    />
+                                )}
+                            />
+                            <Column
+                                title="标题"
+                                dataIndex="Title"
+                                key="Title"
+                            />
+                            <Column
+                                title="简介"
+                                dataIndex="abstract"
+                                key="abstract"
+                            />
+                            <Column
+                                title="修改游记"
+                                render={(record) => (
+                                    <button onClick={() => handleLogueChange(record.id)}>修改</button>
                                 )}
                             />
                         </Table>
@@ -393,399 +439,8 @@ if(userType == 1){
         </div>
     );
 }
+}
 
-else if(userType == 2){
-    return (
-       <div className="personal-profile">
-            <div className="left-column">
-                <div className="user-info">
-                    {editMode ? (
-                        <Form form={form} onFinish={handleSubmit} className="form-container">
-                            <div className="avatar-container">
-                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{userJson.Nickname}</h2>
-                            <Form.Item
-                                label="昵称"
-                                name="Nickname"
-                                rules={[{ required: true, message: '请输入昵称' }]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item
-                                label="电话"
-                                name="telephone"
-                                rules={[{ required: true, message: '请输入电话号码' }]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item
-                                label="邮件"
-                                name="email"
-                                rules={[
-                                    { required: true, message: '请输入邮件地址' },
-                                    { type: 'email', message: '请输入有效的邮件地址' },
-                                ]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">保存</Button>
-                                <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
-                            </Form.Item>
-                        </Form>
-                    ) : (
-                        <div className="centered-info">
-                            <div className="avatar-container">
-                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{userJson.Nickname}</h2>
-                            <p>邮件：{userJson.emai}</p>
-                            <p>电话：{userJson.telephone}</p>
-                            <Button onClick={handleEdit}>编辑</Button>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="right-column">
-                <Tabs activeKey={activeTab} onChange={handleTabChange}>
-                    <TabPane tab="待审核" key="pending">
-                        <Table dataSource={status2.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                                )
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="发布时间"
-                                dataIndex="PublishTime"
-                                key="PublishTime"
-                                render={(value, record) =>(
-                                    console.log(status2),
-                                    <span>{record.PublishTime}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="已通过" key="liked">
-                        <Table dataSource={status3.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="content"
-                                key="content"
-                                render={(value, record) =>(
-                                    console.log(record),
-                                        <span>{record.AuditSuggestions[0]?.Content}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="未通过" key="history">
-                        <Table dataSource={status4.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="content"
-                                key="content"
-                                render={(value, record) =>(
-                                    console.log(record),
-                                        <span>{record.AuditSuggestions[0]?.Content}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                </Tabs>
-            </div>
-        </div>
-    );
-    }
-else if(userType == 3){
-    return (
-        <div className="personal-profile">
-           <div className="left-column">
-                <div className="user-info">
-                    {editMode ? (
-                        <Form form={form} onFinish={handleSubmit} className="form-container">
-                            <div className="avatar-container">
-                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{userJson.Nickname}</h2>
-                            <Form.Item
-                                label="昵称"
-                                name="Nickname"
-                                rules={[{ required: true, message: '请输入昵称' }]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item
-                                label="电话"
-                                name="telephone"
-                                rules={[{ required: true, message: '请输入电话号码' }]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item
-                                label="邮件"
-                                name="email"
-                                rules={[
-                                    { required: true, message: '请输入邮件地址' },
-                                    { type: 'email', message: '请输入有效的邮件地址' },
-                                ]}
-                            >
-                                <Input prefix={<UserOutlined />} disabled={!editMode} />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit">保存</Button>
-                                <Button onClick={handleCancel} style={{ marginLeft: 8 }}>取消</Button>
-                            </Form.Item>
-                        </Form>
-                    ) : (
-                        <div className="centered-info">
-                            <div className="avatar-container">
-                                <Avatar src={userJson.Avatar} alt="用户头像" size={80} />
-                            </div>
-                            <h2>{userJson.Nickname}</h2>
-                            <p>邮件：{userJson.emai}</p>
-                            <p>电话：{userJson.telephone}</p>
-                            <Button onClick={handleEdit}>编辑</Button>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="right-column">
-                <Tabs activeKey={activeTab} onChange={handleTabChange}>
-                    <TabPane tab="待分配" key="pending">
-                        <Table dataSource={status1} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核状态"
-                                dataIndex="Status"
-                                key="Status"
-                                render={(status) => {
-                                    if (status === 1) {
-                                        return "未分配";
-                                    }
-                                    return status;
-                                }}
-                            />
-                            <Column
-                                title="分配编辑"
-                                dataIndex="assignee"
-                                key="assignee"
-                                render={(text, record) => (
-                                    <Select
-                                        value={text}
-                                        onChange={(value) => handleAllocate(value,record)}
-                                        disabled={!!text}
-                                    >
-                                        <Option value="thunderbo2y">thunderbo2y</Option>
-                                        <Option value="1q">1q</Option>
-                                    </Select>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="待审核" key="pending-review">
-                        <Table dataSource={status2} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核编辑"
-                                dataIndex="AuditSuggestions"
-                                key="EditorName"
-                                render={(value, record) =>(
-                                    console.log(record),
-                                    <span>{record.AuditSuggestions[0]?.EditorName}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="已通过" key="approved">
-                        <Table dataSource={status3} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="content"
-                                key="content"
-                                render={(value, record) =>(
-                                    console.log(record),
-                                        <span>{record.AuditSuggestions[0]?.Content}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                    <TabPane tab="未通过" key="rejected">
-                        <Table dataSource={status4} pagination={false}>
-                            <Column
-                                title="封面"
-                                dataIndex="cover"
-                                key="cover"
-                                render={(imageUrl,record) => (
-                                    <Image
-                                        src={imageUrl}
-                                        alt="日志封面"
-                                        width={100}
-                                        onClick={() => handleImageClick(record.id)}
-                                    />
-                                )}
-                            />
-                            <Column
-                                title="标题"
-                                dataIndex="Title"
-                                key="Title"
-                            />
-                            <Column
-                                title="简介"
-                                dataIndex="abstract"
-                                key="abstract"
-                            />
-                            <Column
-                                title="审核意见"
-                                dataIndex="content"
-                                key="content"
-                                render={(value, record) =>(
-                                    console.log(record),
-                                        <span>{record.AuditSuggestions[0]?.Content}</span>
-                                )}
-                            />
-                        </Table>
-                    </TabPane>
-                </Tabs>
-            </div>
-        </div>
-    );
-}
-}
 
 
 export default PersonalProfile;

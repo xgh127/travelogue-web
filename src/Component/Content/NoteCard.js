@@ -45,7 +45,7 @@ export const NoteCard = ({ note }) => {
                 //根据id获取浏览量信息
                 const viewsInfo = await doGet('/History/?History.TravelId='+note.id);
                 //提取viewsInfo中的浏览量
-                setViewNum(resp2Json(viewsInfo).data.length/2);
+                setViewNum(resp2Json(viewsInfo).data.length);
             } catch (error) {
                 console.error("Failed to fetch note:", error);
             }
