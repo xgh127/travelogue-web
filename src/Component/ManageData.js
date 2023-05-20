@@ -15,6 +15,7 @@ const { Sider,Content } = Layout;
 const ManageData = () => {
     const navigate = useNavigate();
     const [userlike,setUserlike] = useState([])
+    const [usercomment, setUsercomment] = useState([])
     useEffect(()=>{
         const fetchData = async () => {
             try {
@@ -28,6 +29,17 @@ const ManageData = () => {
                         userLike[like.UserId] += 1;
                     } else {
                         userLike[like.UserId] = 1;
+                    }
+                });
+                //统计每个用户的评论数
+                const CommentResp = await doGet('/Comment');
+                const CommentRespJson = resp2Json(CommentResp).data;
+                const userComment ={};
+                CommentRespJson.forEach((comment)=>{
+                    if (userComment[comment.ParentId]){
+                        userComment[comment.ParentId] += 1;
+                    } else {
+                        userComment[comment.ParentId] = 1;
                     }
                 });
                 //获取所有用户信息
@@ -44,8 +56,20 @@ const ManageData = () => {
                         });
                     }
                 });
+                //将用户名和评论数对应起来
+                const userCommentList = [];
+                usersRespJson.forEach((user)=> {
+                    if (userComment[user.id]){
+                        userCommentList.push({
+                            key: user.id,
+                            username: user.UserName,
+                            comment: userComment[user.id],
+                        });
+                    }
+                });
                 // console.log(JSON.stringify(userLikeList));
                 setUserlike(userLikeList);
+                setUsercomment(userCommentList);
                 // alert("获取数据成功"+JSON.stringify(userLikeList))
             } catch (error) {
                 console.error("Failed to fetch notes:", error);
@@ -92,10 +116,14 @@ const ManageData = () => {
                             <Tabs.Item  style={{width:500}} tab="用户点赞数统计" key="1">
                                 <DataChart title = '用户获取点赞数量表' x = 'username' y='like' data = {userlike}/>
                             </Tabs.Item>
-                            <Tabs.Item   tab="其他" key="2">
+                            <Tabs.Item  style={{width:500}} tab="用户评论数统计" key="2">
+                                <DataChart title = '用户评论数量表' x = 'username' y='comment' data = {usercomment}/>
+                            </Tabs.Item>
+                            <Tabs.Item   tab="其他" key="3">
                            <p>other chart</p>
                             </Tabs.Item>
                         </Tabs>
+
 
                     </div>
                 </Content>
