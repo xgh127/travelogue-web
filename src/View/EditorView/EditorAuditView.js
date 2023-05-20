@@ -2,6 +2,7 @@ import React from "react";
 import {Layout} from "antd";
 import {AppContent} from "../../Component/AppContent";
 import AppFooter from "../../Component/Footer";
+import EditorAudit from "../../Component/EditorAudit";
 
 
 const EditorAuditView = () => {
@@ -9,7 +10,7 @@ const EditorAuditView = () => {
     return(
         <Layout>
             <Layout.Header/>
-            <AppContent children={<div>这是编辑页面</div>}/>
+            <AppContent children={<EditorAudit/>}/>
             <AppFooter/>
         </Layout>
     )

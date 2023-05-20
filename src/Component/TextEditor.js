@@ -135,7 +135,7 @@ const Editor = () => {
                 return { "id": tagId };
             }),
             "cover": imageUrl, // 添加图片信息
-            "PublishTime": time.toLocaleString(),
+            "PublishTime": time,
         };
 
         console.log("data", data); // 打印出json数据

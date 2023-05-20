@@ -37,7 +37,7 @@ const routes = [
     {
         path: '/editor/audit',
         element: <EditorAuditView/>,
-        canActivate: (user) => user
+        // canActivate: (user) => user
     },
     {
         path:'/TextEditor',
