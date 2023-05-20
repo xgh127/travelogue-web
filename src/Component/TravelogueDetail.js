@@ -57,7 +57,7 @@ const TravelogueDetails = () => {
 
             try {
                 const notesInfo = await doGet('/Travelogue/'+id);
-                // console.log("notesInfo111111111" + JSON.stringify(notesInfo));
+                console.log("notesInfo111111111" + JSON.stringify(notesInfo));
                 const resp = resp2Json(notesInfo);
                 console.log("noteDetailInfo" + JSON.stringify(resp.data));
                 // alert("noteDetailInfo" + JSON.stringify(resp.data));
