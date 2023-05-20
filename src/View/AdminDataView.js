@@ -1,18 +1,19 @@
-import {Layout, Table} from "antd";
+import {Layout, Table, Tabs, theme} from "antd";
 import AppFooter from "../Component/Footer";
 import AdministratorHeader from "../Component/AdministratorHeader";
-import ManagerAll from "../Component/ManagerAll";
+import ManageData from "../Component/ManageData";
 
 
 
-const ManagerallView = () => {
+
+const AdminDataView = () => {
 
     return(
         <Layout>
             <AdministratorHeader/>
-            <ManagerAll/>
+            <ManageData/>
             <AppFooter/>
         </Layout>
     )
 }
-export default ManagerallView;
+export default AdminDataView;

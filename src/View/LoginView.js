@@ -34,14 +34,6 @@ const LoginView = (props) => {
             }
             alert(userJson.id);
             localStorage.setItem(Constant.USERID, userJson.id)
-            // navigate("/first");
-            // alert(userJson.UserAuth.userType);
-            // setUser(userJson);
-          // if (userJson.UserAuth.userType === 1) {
-            //    navigate("/first");
-            // } else if (userJson.UserAuth.userType === 2) {
-            //   navigate('/editor/audit');
-            // }
             message.success("登录成功");
         } else {
             message.error("密码错误");

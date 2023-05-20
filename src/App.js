@@ -20,8 +20,11 @@ import SearchResultView from "./View/SearchResultView";
 import {checkLogin, checkmainEditor} from "./Service/UserService";
 import TextChangeView from "./View/TextChangeView";
 import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
+
+import AdminDataView from "./View/AdminDataView";
 import MainEditorProfileView from "./View/MainEditorProfileView";
 import EditorProfileView from "./View/EditroProfileView";
+
 
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
@@ -101,6 +104,9 @@ const routes = [
         path:'/SearchResult',
         element: <SearchResultView/>,
         canActivate: checkLogin
+    },{
+        path: '/AdminData',
+        element: <AdminDataView/>,
     }
 ];
 function App() {
