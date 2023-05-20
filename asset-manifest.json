@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "./static/css/main.68161b10.css",
-    "main.js": "./static/js/main.48a3d25f.js",
-    "static/js/787.2b6e3aa0.chunk.js": "./static/js/787.2b6e3aa0.chunk.js",
-    "static/media/schoolLogo.png": "./static/media/schoolLogo.ff600a0720d26b1274d7.png",
-    "static/media/InitalAvatar.jpg": "./static/media/InitalAvatar.2832af2a727830cbd23b.jpg",
-    "static/media/background.jpg": "./static/media/background.66a36a47f01f56599d57.jpg",
-    "index.html": "./index.html",
-    "main.68161b10.css.map": "./static/css/main.68161b10.css.map",
-    "main.48a3d25f.js.map": "./static/js/main.48a3d25f.js.map",
-    "787.2b6e3aa0.chunk.js.map": "./static/js/787.2b6e3aa0.chunk.js.map"
+    "main.css": "/travelogue-web/static/css/main.68161b10.css",
+    "main.js": "/travelogue-web/static/js/main.0459aa08.js",
+    "static/js/787.2b6e3aa0.chunk.js": "/travelogue-web/static/js/787.2b6e3aa0.chunk.js",
+    "static/media/schoolLogo.png": "/travelogue-web/static/media/schoolLogo.ff600a0720d26b1274d7.png",
+    "static/media/InitalAvatar.jpg": "/travelogue-web/static/media/InitalAvatar.2832af2a727830cbd23b.jpg",
+    "static/media/background.jpg": "/travelogue-web/static/media/background.66a36a47f01f56599d57.jpg",
+    "index.html": "/travelogue-web/index.html",
+    "main.68161b10.css.map": "/travelogue-web/static/css/main.68161b10.css.map",
+    "main.0459aa08.js.map": "/travelogue-web/static/js/main.0459aa08.js.map",
+    "787.2b6e3aa0.chunk.js.map": "/travelogue-web/static/js/787.2b6e3aa0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.68161b10.css",
-    "static/js/main.48a3d25f.js"
+    "static/js/main.0459aa08.js"
   ]
 }
