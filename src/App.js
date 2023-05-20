@@ -24,7 +24,7 @@ import {checkLogin} from "./Service/UserService";
 
 const routes = [
     {
-        path: '/travelogue-web/',
+        path: '/',
         element: <HomeView />,
         canActivate: checkLogin
     },
@@ -107,6 +107,7 @@ function App() {
 
                         {routes.map(route => (
                             <Route
+                                basePath="/travelogue-web"
                                 key={route.path}
                                 path={route.path}
                                 element={
@@ -118,7 +119,7 @@ function App() {
                                 }
                             />
                         ))}
-                        <Route path="/travelogue-web/login" element={<LoginView setUser={setUser} />} />
+                        <Route basePath ="/travelogue-web"  path="/login" element={<LoginView setUser={setUser} />} />
                     </Routes>
                 </div>
             </Router>
