@@ -1,5 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {Layout, Menu, Button, Avatar, Dropdown, Table, Space, Modal, Radio, Select, Popconfirm, message} from 'antd';
+import {
+    Layout,
+    Menu,
+    Button,
+    Avatar,
+    Dropdown,
+    Table,
+    Space,
+    Modal,
+    Radio,
+    Select,
+    Popconfirm,
+    message,
+    Image,
+    Badge
+} from 'antd';
 import {useNavigate} from "react-router-dom";
 import {doDelete, doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
@@ -10,34 +25,8 @@ const { Sider,Content } = Layout;
 
 const ManagerNotesAll = () => {
     const navigate = useNavigate();
-    const expandedRowRender = (record) => {
-        const columns =[
-            {
-                title:'评论人',
-                dataIndex: 'ParentId',
-                key:'ParentId',
 
-            },
-            {
-                title:'评论内容',
-                dataIndex: 'Content',
-                key:'Content',
-
-            },
-            {
-                title:'评论时间',
-                dataIndex: 'CommentTime',
-                key:'CommentTime',
-
-            },
-        ];
-        const dataSource1=[]
-        // useEffect(()=>{
-        //     const dataSource1Info = await doGet('/Travelogue')
-        // },[]);
-        return <Table columns={columns} dataSource={dataSource1} pagination={false} />;
-    }
-    const columns = [
+    const parentColumns = [
         {
             title: '封面',
             width: 50,
@@ -45,12 +34,11 @@ const ManagerNotesAll = () => {
             key: 'cover',
             fixed: 'left',
             ellipsis: true,
-            render:(record)=>{
-
-                    <img src={record.cover} style= {{ width: '100%' }}/>
-            }
-
-
+            // render:(record)=>{
+            //
+            //         <img src={record.cover} style= {{ width: '100%' }}/>
+            // }
+            render:(cover) => (<Image src={cover} alt="日志封面" width={100} />)
         },
         {
             title: '发表时间',
@@ -209,25 +197,6 @@ const ManagerNotesAll = () => {
         }
     ];
 
-    /*选择框*/
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-        },
-    };
-
-
     return(
         <Layout hasSider>
             <Sider className="sidebar">
@@ -243,19 +212,52 @@ const ManagerNotesAll = () => {
                 <Content >
                     <div
                         style={{
-                            padding: 100,
+                            padding: 50,
                         }}
                     >
                         <Table
-                            rowSelection={rowSelection}
-                            columns={columns}
+                            rowKey={record => record.id}
+                            columns={parentColumns}
                             dataSource={dataSource}
                             scroll={{
                                 x:800,
-                                y:2000,
+                                y:600,
                             }}
-                            expandable={{expandedRowRender,
-                                defaultExpandedRowKeys: ['0'],}}
+                            expandable={{
+                                expandedRowRender: (record)=> {
+                                    const childColumn =[
+                                            {
+                                                title:'评论人',
+                                                dataIndex:'ParentId',
+                                                key:'ParentId',
+                                                // render: async (ParentId)=>{
+                                                //     console.log(ParentId);
+                                                //     const a =  await doGet('/User/'+ParentId);
+                                                //     console.log(a);
+                                                //     let tmp = JSON.parse(JSON.stringify(a.data));
+                                                //     console.log(tmp.UserName);
+                                                //     let l = tmp.UserName;
+                                                //     return ParentId;
+                                                // }
+
+                                            },
+                                            {
+                                                title: '评论内容',
+                                                dataIndex: 'Content',
+                                                key:'Content',
+                                            },
+                                            {
+                                                title: '评论时间',
+                                                dataIndex: 'CommentTime',
+                                                key:'CommentTime',
+
+                                            }
+                                        ];
+                                    const childData = record.Commments;
+                                    return <Table columns={childColumn} dataSource={childData} pagination={false}/>;
+                                },
+                                defaultExpandedRowKeys: ['0'],
+                            }}
 
                         />
                     </div>

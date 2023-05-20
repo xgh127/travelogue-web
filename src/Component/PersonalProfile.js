@@ -6,6 +6,7 @@ import {Constant} from "../Utils/constant";
 import {doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router-dom";
+import ManagerallView from "../View/ManagerallView";
 
 const { Column } = Table;
 const { TabPane } = Tabs;
@@ -218,6 +219,7 @@ const PersonalProfile = () => {
             console.error('请求出错：', error);
         }
     }
+
 
 
 if(userType == 1){
@@ -462,7 +464,7 @@ else if(userType == 2){
                                     />
                                 )}
                             />
-                                )}
+                                )
                             />
                             <Column
                                 title="标题"
