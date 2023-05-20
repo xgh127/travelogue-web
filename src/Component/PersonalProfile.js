@@ -15,6 +15,7 @@ const PersonalProfile = () => {
     const [activeTab, setActiveTab] = useState('published');
     const [editMode, setEditMode] = useState(false);
     const [matched, setMatched] = useState('');
+    const [saved, setSaved] = useState('');
     const [status1, setstatus1] = useState([]);//储存status为0的文章
     const [status2, setstatus2] = useState([]);
     const [status3, setstatus3]= useState([]);
@@ -82,10 +83,12 @@ const PersonalProfile = () => {
             // 在这里处理获取到的游记信息
             if (resp.code === 0) {
                 for (const key in resp.data) {
-                    const matchedlogue = resp.data.filter((item) => item.Author.id === userid);
+                    const matchedlogue = resp.data.filter((item) => item.Author.id === userid && item.Status !== 0);
+                    const matchedsaved = resp.data.filter((item) => item.Author.id === userid && item.Status === 0);
                     setMatched(matchedlogue);
+                    setSaved(matchedsaved);
                 }
-                // console.log(matched);
+                console.log(matched);
                 // console.log(matched[0].abstract);
                 // console.log(matched[0].Author.Nickname);
             } else {
@@ -147,6 +150,7 @@ const PersonalProfile = () => {
         let resp = await doJSONPut('/Travelogue/' + record.id, record);
         console.log(resp);
         window.location.reload()
+
     }
     const navigate = useNavigate();
 
@@ -155,7 +159,7 @@ const PersonalProfile = () => {
     }
 
     const handleLogueChange = (id) =>{
-        navigate('/TextEditor?id='+id);
+        navigate('/TextChange?id='+id);
     }
     useEffect(() => {
         getLikes();
@@ -220,6 +224,7 @@ const PersonalProfile = () => {
             console.error('请求出错：', error);
         }
     }
+
 
 
 
@@ -289,7 +294,7 @@ if(userType == 1){
                                         src={imageUrl}
                                         alt="日志封面"
                                         width={100}
-                                        onClick={() => handleLogueChange(record.id)}
+                                        // onClick={() => handleLogueChange(record.id)}
                                     />
                                 )}
                             />
@@ -325,7 +330,6 @@ if(userType == 1){
                                     else if(status === 5){
                                         return "被撤回"
                                     }
-                                    return status;
                                 }}
                             />
                             <Column
@@ -335,6 +339,44 @@ if(userType == 1){
                                 render={(value, record) =>(
                                     // console.log(record),
                                         <span>{record.AuditSuggestions[0]?.Content}</span>
+                                )}
+                            />
+                            <Column
+                                title="修改游记"
+                                render={(record) => (
+                                    <button onClick={() => handleLogueChange(record.id)}>修改</button>
+                                )}
+                            />
+                        </Table>
+                    </TabPane>
+                    <TabPane tab="草稿箱" key="saved">
+                        <Table dataSource={saved} pagination={false}>
+                            <Column
+                                title="封面"
+                                dataIndex="cover"
+                                key="cover"
+                                render={(imageUrl,record) => (
+                                    <Image
+                                        src={imageUrl}
+                                        alt="日志封面"
+                                        width={100}
+                                    />
+                                )}
+                            />
+                            <Column
+                                title="标题"
+                                dataIndex="Title"
+                                key="Title"
+                            />
+                            <Column
+                                title="简介"
+                                dataIndex="abstract"
+                                key="abstract"
+                            />
+                            <Column
+                                title="修改游记"
+                                render={(record) => (
+                                    <button onClick={() => handleLogueChange(record.id)}>修改</button>
                                 )}
                             />
                         </Table>
@@ -394,6 +436,8 @@ if(userType == 1){
         </div>
     );
 }
+
+
 
 else if(userType == 2){
     return (
@@ -787,6 +831,7 @@ else if(userType == 3){
     );
 }
 }
+
 
 
 export default PersonalProfile;

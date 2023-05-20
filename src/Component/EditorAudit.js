@@ -6,6 +6,7 @@ import {doGet, doJSONPut} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
 import {Option} from "antd/es/mentions";
 import {PostFailMsg, PostSuccessMsg} from "../Utils/Message";
+import {useNavigate} from "react-router-dom";
 const { Paragraph } = Typography;
 
 const EditorAudit = () => {
@@ -40,7 +41,7 @@ const EditorAudit = () => {
         fetchData();
     }, []);
 
-
+    const navigate = useNavigate();
 
     const handleAuditSubmit = async (values) => {
         // console.log(id);
@@ -61,6 +62,7 @@ const EditorAudit = () => {
         console.log(resp2);
         if(resp1.code == 0 && resp2.code == 0){
             PostSuccessMsg();
+            navigate("/editorCenter")
         }else {
             PostFailMsg();
         }

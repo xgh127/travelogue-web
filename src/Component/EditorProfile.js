@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 const { Column } = Table;
 const { TabPane } = Tabs;
 
-const MainEditorProfile = () => {
+const EditorProfile = () => {
     const [activeTab, setActiveTab] = useState('published');
     const [editMode, setEditMode] = useState(false);
     const [matched, setMatched] = useState('');
@@ -26,6 +26,7 @@ const MainEditorProfile = () => {
 
     let user = localStorage.getItem(Constant.USER);
     let userJson = JSON.parse(user);
+    let userType = userJson.UserAuth.userType;
     let userid = userJson.id;
 
     useEffect(() => {
@@ -71,7 +72,6 @@ const MainEditorProfile = () => {
         // console.log("临时",tempStatus1); // 输出临时状态数组
         // console.log("编辑",tempeditor);
     }
-
     const [form] = Form.useForm();
 
     const handleSubmit = async (values) => {
@@ -109,23 +109,16 @@ const MainEditorProfile = () => {
         setActiveTab(key);
     };
 
-    const handleAllocate = async (value,record) =>{
-        record.Status = 2;
-        const data = {
-            "Content": '1',
-            "EditorName": value
-        }
-        let resp1 = await doJSONPost('/Audit', data);
-        console.log(resp1);
-        record.AuditSuggestions = [{"id" : resp1.data.id}]
-        record.PublishTime = "2023-05-19T11:18:46.734Z";
-        console.log(record);
-        let resp = await doJSONPut('/Travelogue/' + record.id, record);
-        console.log(resp);
-        window.location.reload();
+
+    const navigate = useNavigate();
+
+    const handleAudit = (id) => {
+        navigate('/editor/audit?id='+id);
     }
 
 
+
+    if(userType == 2){
         return (
             <div className="personal-profile">
                 <div className="left-column">
@@ -180,8 +173,8 @@ const MainEditorProfile = () => {
                 </div>
                 <div className="right-column">
                     <Tabs activeKey={activeTab} onChange={handleTabChange}>
-                        <TabPane tab="待分配" key="pending">
-                            <Table dataSource={status1} pagination={false}>
+                        <TabPane tab="待审核" key="pending">
+                            <Table dataSource={status2.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
                                 <Column
                                     title="封面"
                                     dataIndex="cover"
@@ -194,57 +187,7 @@ const MainEditorProfile = () => {
                                         />
                                     )}
                                 />
-                                <Column
-                                    title="标题"
-                                    dataIndex="Title"
-                                    key="Title"
-                                />
-                                <Column
-                                    title="简介"
-                                    dataIndex="abstract"
-                                    key="abstract"
-                                />
-                                <Column
-                                    title="审核状态"
-                                    dataIndex="Status"
-                                    key="Status"
-                                    render={(status) => {
-                                        if (status === 1) {
-                                            return "未分配";
-                                        }
-                                        return status;
-                                    }}
-                                />
-                                <Column
-                                    title="分配编辑"
-                                    dataIndex="assignee"
-                                    key="assignee"
-                                    render={(text, record) => (
-                                        <Select
-                                            value={text}
-                                            onChange={(value) => handleAllocate(value,record)}
-                                            disabled={!!text}
-                                        >
-                                            <Option value="thunderbo2y">thunderbo2y</Option>
-                                            <Option value="1q">1q</Option>
-                                        </Select>
-                                    )}
-                                />
-                            </Table>
-                        </TabPane>
-                        <TabPane tab="待审核" key="pending-review">
-                            <Table dataSource={status2} pagination={false}>
-                                <Column
-                                    title="封面"
-                                    dataIndex="cover"
-                                    key="cover"
-                                    render={(imageUrl,record) => (
-                                        <Image
-                                            src={imageUrl}
-                                            alt="日志封面"
-                                            width={100}
-                                        />
-                                    )}
+                                )}
                                 />
                                 <Column
                                     title="标题"
@@ -257,18 +200,24 @@ const MainEditorProfile = () => {
                                     key="abstract"
                                 />
                                 <Column
-                                    title="审核编辑"
-                                    dataIndex="AuditSuggestions"
-                                    key="EditorName"
+                                    title="发布时间"
+                                    dataIndex="PublishTime"
+                                    key="PublishTime"
                                     render={(value, record) =>(
-                                        console.log(record),
-                                            <span>{record.AuditSuggestions[0]?.EditorName}</span>
+                                        console.log(status2),
+                                            <span>{record.PublishTime}</span>
+                                    )}
+                                />
+                                <Column
+                                    title="审批游记"
+                                    render={(record) => (
+                                        <button onClick={() => handleAudit(record.id)}>审批</button>
                                     )}
                                 />
                             </Table>
                         </TabPane>
-                        <TabPane tab="已通过" key="approved">
-                            <Table dataSource={status3} pagination={false}>
+                        <TabPane tab="已通过" key="liked">
+                            <Table dataSource={status3.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
                                 <Column
                                     title="封面"
                                     dataIndex="cover"
@@ -302,8 +251,8 @@ const MainEditorProfile = () => {
                                 />
                             </Table>
                         </TabPane>
-                        <TabPane tab="未通过" key="rejected">
-                            <Table dataSource={status4} pagination={false}>
+                        <TabPane tab="未通过" key="history">
+                            <Table dataSource={status4.filter(item => item.AuditSuggestions.some(suggestion => suggestion.EditorName === userJson.UserName))} pagination={false}>
                                 <Column
                                     title="封面"
                                     dataIndex="cover"
@@ -341,7 +290,9 @@ const MainEditorProfile = () => {
                 </div>
             </div>
         );
+    }
+
 }
 
 
-export default MainEditorProfile;
+export default EditorProfile;

@@ -86,6 +86,10 @@ export const checkLogin=()=>{
     return localStorage.getItem(Constant.USER) !== null;
 
 };
+// export const checkmainEditor=()=>{
+//     return localStorage.getItem(Constant.USER.UserAuth.userType) === 3;
+//
+// };
 export const getLocalUser=()=>{
     return JSON.parse(localStorage.getItem(Constant.USER));
 };

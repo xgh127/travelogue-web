@@ -20,19 +20,20 @@ const LoginView = (props) => {
 
             let user = JSON.stringify(resp.data[0]);
             localStorage.setItem(Constant.USER, user);
-            navigate("/", {});
+            // navigate("/", {});
             // alert(user);
             let userJson = JSON.parse(user);
+            if(userJson.UserAuth.userType === 1){
+                navigate("/");
+            }
+            else if(userJson.UserAuth.userType === 2){
+                navigate("/editorCenter");
+            }
+            else if(userJson.UserAuth.userType === 3){
+                navigate("/mainEditorCenter");
+            }
             alert(userJson.id);
             localStorage.setItem(Constant.USERID, userJson.id)
-            navigate("/");
-            // alert(userJson.UserAuth.userType);
-            // setUser(userJson);
-          // if (userJson.UserAuth.userType === 1) {
-            //    navigate("/first");
-            // } else if (userJson.UserAuth.userType === 2) {
-            //   navigate('/editor/audit');
-            // }
             message.success("登录成功");
         } else {
             message.error("密码错误");
