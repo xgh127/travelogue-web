@@ -18,7 +18,8 @@ import {
 import {useNavigate} from "react-router-dom";
 import {doDelete, doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
-
+import * as XLSX from 'xlsx';
+import ExportJsonExcel from 'js-export-excel';
 const { Sider,Content } = Layout;
 
 
@@ -46,8 +47,13 @@ const ManagerNotesAll = () => {
             dataIndex: 'PublishTime',
             key: 'PublishTime',
             fixed: 'left',
-            ellipsis: true,
-            sorter: true,
+            // ellipsis: true,
+            sorter: (a,b)=> {
+                let aTime = new Date(a.PublishTime).getTime();
+                let bTime = new Date(b.PublishTime).getTime();
+                return aTime - bTime;
+
+            },
             render:(text)=>{
                 if(text[0] == '"'){
                     text = text.split('"')[1];
@@ -64,6 +70,8 @@ const ManagerNotesAll = () => {
             key: 'Title',
             fixed: 'left',
             ellipsis: true,
+            sorter: (a, b)=>a.Title.length - b.Title.length,
+
 
         },
         {
@@ -81,6 +89,7 @@ const ManagerNotesAll = () => {
             key: 'UserName',
             fixed: 'left',
             ellipsis: true,
+            sorter: (a, b)=>a.Author.UserName.length - b.Author.UserName.length,
             render:(_,record)=>{
                 return record.Author.UserName;
                 }
@@ -103,7 +112,7 @@ const ManagerNotesAll = () => {
             dataIndex: 'Status',
             key: 'Status',
             fixed: 'left',
-
+            sorter:(a,b)=> a.Status-b.Status,
             render:(text)=>{
                 let tmp ={
                     '0':'本地草稿',
@@ -157,7 +166,7 @@ const ManagerNotesAll = () => {
         console.log(trave)
         let resp = await doJSONPut('/Travelogue/'+record.id, trave);
         console.log(resp);
-        // window.location.reload();
+        window.location.reload();
     }
     /*导出游记*/
 
@@ -197,6 +206,56 @@ const ManagerNotesAll = () => {
         }
     ];
 
+    /*excel表头*/
+
+    const downloadFileToExcel = () => {
+        console.log("开始导出");
+        let dataTable = [];
+        console.log("1");
+        let option = {};
+        console.log("2");
+        dataTable = dataSource;
+        console.log(dataTable);
+        option.fileName = '游记汇总';
+        const Format=(dataTable)=>{
+            const list = dataTable;
+
+            for (let index = 0; index < list.length; index++){
+
+                /*输入状态*/
+                let tmp = list[index]['Status'];
+                let a ={
+                    '0':'本地草稿',
+                    '1':'已上传未分配',
+                    '2':'已分配未审核',
+                    '3':'审核通过',
+                    '4':'终审不通过',
+                    '5':'被管理员撤回不显示',
+                };
+                list[index]['Status'] = a[tmp];
+
+                list[index]['UserName'] = list[index]['Author']['UserName'];
+            }
+            return list;
+        }
+        let data = Format(dataTable);
+        option.datas=[
+            {
+                //第一个sheet
+                sheetData:data,
+                sheetName:'sheet',
+                sheetFilter:['id','Title','UserName','abstract','Content','PublishTime','Status'],
+                sheetHeader:['游记ID','标题','作者','摘要','内容','发表时间','状态']
+            },
+        ];
+        console.log(option);
+        const toExcel = new ExportJsonExcel(option);
+        console.log(toExcel);
+        toExcel.saveExcel();
+        window.location.reload();
+
+    }
+
     return(
         <Layout hasSider>
             <Sider className="sidebar">
@@ -208,7 +267,7 @@ const ManagerNotesAll = () => {
                 </Menu>
             </Sider>
             <div className="content">
-                <Button style={{width:100,marginBottom:0,}}>批量导出</Button>
+                <Button style={{width:150,marginBottom:0,}} onClick={()=>{downloadFileToExcel()}}>导出excel数据</Button>
                 <Content >
                     <div
                         style={{

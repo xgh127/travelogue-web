@@ -20,7 +20,7 @@ const LoginView = (props) => {
 
             let user = JSON.stringify(resp.data[0]);
             localStorage.setItem(Constant.USER, user);
-            navigate("/", {});
+            // navigate("/", {});
             // alert(user);
             let userJson = JSON.parse(user);
             alert(userJson.id);
@@ -29,6 +29,13 @@ const LoginView = (props) => {
             // alert(userJson.UserAuth.userType);
             // setUser(userJson);
             message.success("登录成功");
+            if (userJson.UserAuth.userType === 0){
+                navigate("/manager");
+            }
+            else{
+                navigate("/",{});
+            }
+
         } else {
             message.error("密码错误");
         }
