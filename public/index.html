@@ -41,14 +41,5 @@
   To begin the development, run `npm start` or `yarn start`.
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
-<script>
-  // Add this script to handle 404 errors and redirect to index.html
-  (function () {
-    var path = window.location.href.split("/").pop();
-    if (path !== "" && path !== "index.html") {
-      window.location.href = "/travelogue-web/";
-    }
-  })();
-</script>
 </body>
 </html>
