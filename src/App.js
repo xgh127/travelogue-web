@@ -12,9 +12,13 @@ import ManagerallView from "./View/ManagerallView";
 import {Constant} from "./Utils/constant";
 import CollaborativeFiltering from "./View/RecommendView/CollaborativeFiltering";
 import ViewsRecommendView from "./View/RecommendView/ViewsRecommend";
+
+import ManagerNotesAllView from "./View/ManagerNotesAllView";
+
 import AdministratorView from "./View/AdministratorView";
 import SearchResultView from "./View/SearchResultView";
 import {checkLogin} from "./Service/UserService";
+
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
 
@@ -52,17 +56,16 @@ const routes = [
         canActivate: checkLogin
     },
     {
-
         path:'/register',
         element: <RegisterView/>,
     },
     {
-        path:'/administrator',
-        element: <AdministratorView/>,
-    },
-    {
         path: '/manager',
         element: <ManagerallView/>,
+    },
+    {
+        path: '/managernotesall',
+        element: <ManagerNotesAllView/>,
     },
     {
         path:'/ViewsRecommend',
