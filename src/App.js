@@ -101,7 +101,7 @@ function App() {
         };
     }, []);
         return (
-            <Router basename = '/Travelogue-web'>
+            <Router >
                 <div className="App">
                     <Routes>
 
