@@ -10,6 +10,7 @@ import '../CSS/AppHeader.css';
 import SearchBar from "./SearchBar";
 import {useNavigate} from "react-router-dom";
 import {Constant} from "../Utils/constant";
+import {getLocalUser} from "../Service/UserService";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -62,7 +63,7 @@ const AppHeader = () => {
         <div>
             {/*    增加一个用户名，使其与Item对其*/}
             <Menu>
-                <div className="user-name"><b>惜取少年时</b></div>
+                <div className="user-name"><b>{getLocalUser().Nickname}</b></div>
                 <Menu.Item key="1" onClick={()=>{navigate('/personalCenter')}}>个人信息</Menu.Item>
                     <Menu.Item key="2">通用设置</Menu.Item>
                     <Menu.Item key="3">内容管理</Menu.Item>

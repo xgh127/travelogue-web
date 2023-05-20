@@ -96,7 +96,7 @@ const TravelogueDetails = () => {
                 //根据id获取浏览量信息
                 const viewsInfo = await doGet('/History/?History.TravelId='+id);
                 //提取viewsInfo中的浏览量
-                setViewNum(resp2Json(viewsInfo).data.length/2);
+                setViewNum(resp2Json(viewsInfo).data.length);
                 //读取评论信息
                 const commentsInfo = resp.data.Commments;
                 // alert("commentsInfo:"+JSON.stringify(commentsInfo));

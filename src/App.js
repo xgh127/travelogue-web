@@ -25,7 +25,7 @@ import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
 
 const routes = [
     {
-        path: '/',
+        path: '/first',
         element: <HomeView />,
         canActivate: checkLogin
     },
