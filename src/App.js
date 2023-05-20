@@ -28,7 +28,7 @@ import EditorProfileView from "./View/EditroProfileView";
 
 const routes = [
     {
-        path: '/',
+        path: '/first',
         element: <HomeView />,
         canActivate: checkLogin
     },

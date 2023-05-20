@@ -22,6 +22,28 @@
   - [主要创新之处](#主要创新之处)
   - [成员分工](#成员分工)
 
+## 项目文件结构
+```bash
+
+├── README.md
+├── src
+│   ├── Assets
+|   ├── Components
+│   ├── CSS
+│   ├── Service
+│   ├── Utils
+│   ├── View
+|   ├── App.js
+|   ├── index.js
+|   ├── index.css
+|   ├── logo.svg
+|   ├── reportWebVitals.js
+|   ├── setupTests.js
+|   ├── webpack.config.js
+├── package-lock.json
+├── package.json
+
+
 ## 项目简介
 &nbsp;&nbsp; &nbsp; &nbsp;  游记评阅系统为个人旅游文章的投稿、评审、评价及管理提供了一个网络平台。首先
 是用户通过该平台上传游记，编辑进行审稿，若最终确定通过则将游记发布在平台上，以

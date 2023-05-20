@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 const { Search } = Input;
 //设置SearchBar的css样式
 
-const SearchBar: React.FC = () => {
+const SearchBar= () => {
     const navigate = useNavigate();
     const [searchType, setSearchType] = useState(0);
 
