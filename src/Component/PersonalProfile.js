@@ -152,25 +152,28 @@ const PersonalProfile = () => {
         navigate('/editor/audit?id='+id);
     }
 
+    const handleLogueChange = (id) =>{
+        navigate('/TextEditor?id='+id);
+    }
     useEffect(() => {
         getLikes();
     }, []);
 
-    useEffect(() => {
-        console.log("all I like", likes);
-    }, [likes]);
+    // useEffect(() => {
+    //     // console.log("all I like", likes);
+    // }, [likes]);
 
     const getLikes = async () =>{
         try {
             let templike = [];
             const resp = await doGet('/Like');
-            console.log("Like",resp);
+            // console.log("Like",resp);
             // 在这里处理获取到的游记信息
             if (resp.code === 0) {
                 for (const key in resp.data) {
                     if(resp.data[key].UserId == userid){
                         const  matchedId = resp.data[key].TravelId;
-                        console.log("matched" + matchedId);
+                        // console.log("matched" + matchedId);
                         const resp1 = await doGet('/Travelogue/' + matchedId);
                         templike.push(resp1.data);
                     }
@@ -193,16 +196,16 @@ const PersonalProfile = () => {
         try {
             let tempHistory = [];
             const resp = await doGet('/History');
-            console.log("History",resp);
+            // console.log("History",resp);
             // 在这里处理获取到的游记信息
             if (resp.code === 0) {
                 for (const key in resp.data) {
                     if(resp.data[key].UserId == userid){
                         const  matchedId = resp.data[key].TravelId;
-                        console.log("matched" + matchedId);
+                        // console.log("matched" + matchedId);
                         const resp1 = await doGet('/Travelogue/' + matchedId);
                         resp1.data.BrowsingTime = resp.data[key].Time;
-                        console.log(resp1);
+                        // console.log(resp1);
                         tempHistory.push(resp1.data);
                     }
                 }
@@ -278,7 +281,14 @@ if(userType == 1){
                                 title="封面"
                                 dataIndex="cover"
                                 key="cover"
-                                render={(cover) => <Image src={cover} alt="日志封面" width={100} />}
+                                render={(imageUrl,record) => (
+                                    <Image
+                                        src={imageUrl}
+                                        alt="日志封面"
+                                        width={100}
+                                        onClick={() => handleLogueChange(record.id)}
+                                    />
+                                )}
                             />
                             <Column
                                 title="标题"
@@ -320,7 +330,7 @@ if(userType == 1){
                                 dataIndex="content"
                                 key="content"
                                 render={(value, record) =>(
-                                    console.log(record),
+                                    // console.log(record),
                                         <span>{record.AuditSuggestions[0]?.Content}</span>
                                 )}
                             />

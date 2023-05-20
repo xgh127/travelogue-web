@@ -5,7 +5,7 @@ import '../CSS/Editor.css';
 import {Button, Card, Descriptions, Input, message, Space, Tooltip} from "antd";
 import PropTypes from "prop-types";
 import MultiSelect from "./MultiSelect";
-import { doJSONPost } from "../Utils/ajax";
+import {doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import { Constant } from "../Utils/constant";
 import { PostFailMsg, PostSuccessMsg } from "../Utils/Message";
 import ImageUploadButton from "./ImageUploadButton";
@@ -64,9 +64,9 @@ const Editor = () => {
         setSelectedTags(selectedTagLabels);
     };
 
-    useEffect(() => {
-        console.log("选中的标签", selectedTags);
-    }, [selectedTags]);
+    // useEffect(() => {
+    //     // console.log("选中的标签", selectedTags);
+    // }, [selectedTags]);
 
     const handleAbstractChange = (e) => {
         setAbstract(e.target.value);
@@ -149,6 +149,74 @@ const Editor = () => {
         tagIds.length = 0;
     };
 
+    useEffect(() => {
+        // 根据游记ID获取游记信息的异步函数，例如：
+        const fetchTravelogue = async (travelogueId) => {
+            try {
+                // 发起请求获取游记信息
+                const response = await doGet(`/Travelogue/${travelogueId}`);
+                const travelogueData = response.data;
+                console.log("要修改的游记",travelogueData);
+                console.log(travelogueData.Title)
+                // 将游记信息填充到输入框中
+                setTitle(travelogueData.Title);
+                setValue(travelogueData.Content);
+                setAbstract(travelogueData.abstract);
+                // 其他输入框的填充操作...
+            } catch (error) {
+                console.error('获取游记信息失败:', error);
+            }
+        };
+
+        // 从URL或路由参数中获取游记ID
+        const travelogueId = window.location.search.split('=')[1];// 从URL或路由参数中获取游记ID的逻辑，例如：props.match.params.travelogueId;
+
+            // 调用获取游记信息的函数
+            fetchTravelogue(travelogueId);
+    }, []);
+
+    const handleLogueChange = async () =>{
+        // 处理标签
+        const tagIds = [];
+        for (const selectedTag of selectedTags) {
+            const data = {
+                "Name": selectedTag,
+            };
+            let res = await doJSONPost('/Tag', data);
+            console.log(res);
+            let tagId = res.data.id;
+            tagIds.push(tagId);
+            console.log(tagIds);
+        };
+
+        let user = localStorage.getItem(Constant.USER);
+        let id = JSON.parse(user).id;
+        const data = {
+            "Title": title,
+            "Content": value,
+            "abstract": abstract,
+            "Status": 1,
+            "Author": {
+                "id":id
+            },
+            "Tag": tagIds.map((tagId) => {
+                return { "id": tagId };
+            }),
+            "cover": imageUrl, // 添加图片信息
+            "PublishTime": time,
+        };
+        const travelogueId = window.location.search.split('=')[1];
+        console.log("data", data); // 打印出json数据
+        let resp = await doJSONPut('/Travelogue/' + travelogueId, data);
+        console.log(resp);
+        if (resp.code === 0) {
+            PostSuccessMsg();
+        } else {
+            PostFailMsg();
+        }
+        tagIds.length = 0;
+    }
+
     return (
         <div className="editor-container">
             <div className="editor-header">
@@ -218,7 +286,7 @@ const Editor = () => {
 
                 <div className="preview-update-buttons">
 
-                    <button className="preview-button">预览</button>
+                    <button className="preview-button" onClick={handleLogueChange}>修改</button>
                     <button className="update-button" onClick={handleSubmit}>上传</button>
                     <Tooltip title="敏感词检测,将会把敏感词以**替换，请您发现后及时修改">
                     <button className="sensitive-button"
