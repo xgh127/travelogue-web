@@ -24,7 +24,7 @@ import {checkLogin} from "./Service/UserService";
 
 const routes = [
     {
-        path: '/',
+        path: '/travelogue-web/',
         element: <HomeView />,
         canActivate: checkLogin
     },
@@ -118,7 +118,7 @@ function App() {
                                 }
                             />
                         ))}
-                        <Route path="/login" element={<LoginView setUser={setUser} />} />
+                        <Route path="/travelogue-web/login" element={<LoginView setUser={setUser} />} />
                     </Routes>
                 </div>
             </Router>

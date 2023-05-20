@@ -2,7 +2,7 @@
   "name": "travelogue-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "./",
   "dependencies": {
     "@ant-design/compatible": "^5.1.1",
     "@ant-design/icons": "^5.0.1",
