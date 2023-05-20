@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Card, Typography, Avatar, Tag, Form, Button, message, Select, Space} from 'antd';
-import {Comment} from "@ant-design/compatible";
+import {Card, Typography, Avatar, Tag, Form, Button, Select, Space} from 'antd';
 import "../CSS/TravelogueDetail.css";
-import {EyeOutline, HeartOutline} from "antd-mobile-icons";
 import TextArea from "antd/es/input/TextArea";
-import {doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
+import {doGet, doJSONPut} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
-import {HeartFilled, HeartOutlined} from "@ant-design/icons";
-import {Constant} from "../Utils/constant";
 import {Option} from "antd/es/mentions";
 import {PostFailMsg, PostSuccessMsg} from "../Utils/Message";
 const { Paragraph } = Typography;

@@ -5,7 +5,7 @@ import "../CSS/PersonalProfile.css";
 import {Constant} from "../Utils/constant";
 import {doGet, doJSONPost, doJSONPut} from "../Utils/ajax";
 import {Option} from "antd/es/mentions";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const { Column } = Table;
 const { TabPane } = Tabs;

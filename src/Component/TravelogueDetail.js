@@ -155,8 +155,8 @@ const TravelogueDetails = () => {
             setComments(newComments);
             travelogueInfo.Commments.push(commentrespJson.data);
             comments.push(commentrespJson.data);
-            const res =await doJSONPut('/Travelogue/' + travelogueInfo.id, travelogueInfo);
-            //为了防止setComments异步的
+            await doJSONPut('/Travelogue/' + travelogueInfo.id, travelogueInfo);
+//为了防止setComments异步的
         } else {
             message.error('评论失败！');
         }

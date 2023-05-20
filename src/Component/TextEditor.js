@@ -161,7 +161,9 @@ const Editor = () => {
                            placeholder="请输入标题" />
                     </Tooltip>
                 </div>
+                <Tooltip title={"仅支持英文游记上传！"}>
                 <div className="editor-toolbar">
+
                     <ReactQuill
                         theme="snow"
                         placeholder={'请输入正文'}
@@ -187,7 +189,9 @@ const Editor = () => {
                             },
                         }}
                     />
+
                 </div>
+                    </Tooltip >
             </div>
 
             <Card className="editor-footer">
