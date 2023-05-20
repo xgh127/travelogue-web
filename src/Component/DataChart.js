@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Column } from '@ant-design/plots';
+import {Column} from "@ant-design/plots";
+// import { Column } from '@ant-design/plots';
 
  const DataChart = (props) => {
     const [data, setData] = useState(props.data);
