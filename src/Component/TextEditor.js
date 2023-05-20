@@ -12,6 +12,7 @@ import ImageUploadButton from "./ImageUploadButton";
 import { compressImage, getBase64 } from "../Utils/imageUtils";
 import TextArea from "antd/es/input/TextArea";
 import {getSensitive, SensitiveWordsFilter} from "../Utils/Sensitive";
+import {useNavigate} from "react-router-dom";
 
 const options = [
     { label: 'nature ', value: '1' },
@@ -44,7 +45,6 @@ const placeholder = '请选择标签';
 
 const time = new Date();
 
-
 const Editor = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -52,6 +52,8 @@ const Editor = () => {
     const [abstract, setAbstract] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [compressedImage, setCompressedImage] = useState(null); // 添加compressedImage状态
+    const navigate = useNavigate();
+
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -143,6 +145,7 @@ const Editor = () => {
         console.log(resp);
         if (resp.code === 0) {
             PostSuccessMsg();
+            navigate("/");
         } else {
             PostFailMsg();
         }
@@ -211,6 +214,7 @@ const Editor = () => {
         console.log(resp);
         if (resp.code === 0) {
             PostSuccessMsg();
+            navigate("/");
         } else {
             PostFailMsg();
         }
@@ -229,7 +233,9 @@ const Editor = () => {
                            placeholder="请输入标题" />
                     </Tooltip>
                 </div>
+                <Tooltip title={"仅支持英文游记上传！"}>
                 <div className="editor-toolbar">
+
                     <ReactQuill
                         theme="snow"
                         placeholder={'请输入正文'}
@@ -255,7 +261,9 @@ const Editor = () => {
                             },
                         }}
                     />
+
                 </div>
+                    </Tooltip >
             </div>
 
             <Card className="editor-footer">

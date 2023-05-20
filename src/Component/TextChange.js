@@ -12,6 +12,7 @@ import ImageUploadButton from "./ImageUploadButton";
 import { compressImage, getBase64 } from "../Utils/imageUtils";
 import TextArea from "antd/es/input/TextArea";
 import {getSensitive, SensitiveWordsFilter} from "../Utils/Sensitive";
+import {useNavigate} from "react-router-dom";
 
 const options = [
     { label: 'nature ', value: '1' },
@@ -52,6 +53,7 @@ const Editor = () => {
     const [abstract, setAbstract] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [compressedImage, setCompressedImage] = useState(null); // 添加compressedImage状态
+    const navigate = useNavigate();
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -107,47 +109,6 @@ const Editor = () => {
         }
     };
 
-    const handleSubmit = async () => {
-        // 处理标签
-        const tagIds = [];
-        for (const selectedTag of selectedTags) {
-            const data = {
-                "Name": selectedTag,
-            };
-            let res = await doJSONPost('/Tag', data);
-            console.log(res);
-            let tagId = res.data.id;
-            tagIds.push(tagId);
-            console.log(tagIds);
-        };
-
-        let user = localStorage.getItem(Constant.USER);
-        let id = JSON.parse(user).id;
-        const data = {
-            "Title": title,
-            "Content": value,
-            "abstract": abstract,
-            "Status": 1,
-            "Author": {
-                "id":id
-            },
-            "Tag": tagIds.map((tagId) => {
-                return { "id": tagId };
-            }),
-            "cover": imageUrl, // 添加图片信息
-            "PublishTime": time,
-        };
-
-        console.log("data", data); // 打印出json数据
-        let resp = await doJSONPost('/Travelogue', data);
-        console.log(resp);
-        if (resp.code === 0) {
-            PostSuccessMsg();
-        } else {
-            PostFailMsg();
-        }
-        tagIds.length = 0;
-    };
 
     useEffect(() => {
         // 根据游记ID获取游记信息的异步函数，例如：
@@ -211,6 +172,7 @@ const Editor = () => {
         console.log(resp);
         if (resp.code === 0) {
             PostSuccessMsg();
+            navigate("/");
         } else {
             PostFailMsg();
         }
@@ -253,6 +215,7 @@ const Editor = () => {
         console.log(resp);
         if (resp.code === 0) {
             PostSuccessMsg();
+            navigate("/");
         } else {
             PostFailMsg();
         }

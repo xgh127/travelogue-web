@@ -36,6 +36,7 @@ const AppHeader = () => {
             path: '/latest-travelogue',
             onClick: () => {
                 console.log('最新游记');
+                navigate('/LatestRecommend');
             },
         },
         {

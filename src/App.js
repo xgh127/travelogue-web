@@ -17,8 +17,11 @@ import ManagerNotesAllView from "./View/ManagerNotesAllView";
 
 // import AdministratorView from "./View/AdministratorView";
 import SearchResultView from "./View/SearchResultView";
-import {checkLogin} from "./Service/UserService";
+import {checkLogin, checkmainEditor} from "./Service/UserService";
 import TextChangeView from "./View/TextChangeView";
+import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
+import MainEditorProfileView from "./View/MainEditorProfileView";
+import EditorProfileView from "./View/EditroProfileView";
 
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
@@ -33,6 +36,16 @@ const routes = [
     {
         path: '/personalCenter',
         element: <PersonCenterView/>,
+        canActivate: checkLogin
+    },
+    {
+        path: '/mainEditorCenter',
+        element: <MainEditorProfileView/>,
+        canActivate: checkLogin
+    },
+    {
+        path: '/EditorCenter',
+        element: <EditorProfileView/>,
         canActivate: checkLogin
     },
     {
@@ -77,6 +90,11 @@ const routes = [
     {
         path:'/ViewsRecommend',
         element: <ViewsRecommendView/>,
+        canActivate: checkLogin
+    },
+    {
+      path: '/LatestRecommend',
+        element: <LatestRecommendView/>,
         canActivate: checkLogin
     },
     {
