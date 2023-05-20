@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Card, Avatar, Tag, Space} from 'antd';
-import {EyeOutlined, HeartFilled, HeartOutlined} from "@ant-design/icons";
+import {CommentOutlined, EyeOutlined, HeartFilled, HeartOutlined, InfoOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {doGet} from "../../Utils/ajax";
 import {resp2Json} from "../../Utils/Tool";
@@ -12,6 +12,7 @@ export const NoteCard = ({ note }) => {
     const [likeNum, setLikeNum] = useState(0);
     const [viewNum, setViewNum] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const [commentNum, setCommentNum] = useState(0);
     const LikeButton = () => {
         if (isLiked) {
             return <HeartFilled style={{ color: 'red' }}  />;
@@ -29,9 +30,11 @@ export const NoteCard = ({ note }) => {
                 const resp = resp2Json(notesInfo);
                 console.log("noteDetailInfo" + JSON.stringify(resp.data));
                 // alert("noteDetailInfo" + JSON.stringify(resp.data));
+
                 const likeInfo = resp.data.Likes;
                 //设置点赞数
                 setLikeNum(likeInfo.length);
+                setCommentNum(resp.data.Commments.length)
                 //检查用户是否已经对该游记点赞，并设置点赞状态
                 for (let i = 0; i < likeInfo.length; i++) {
                     if (likeInfo[i].UserId === parseInt(localStorage.getItem(Constant.USERID))) {
@@ -71,6 +74,8 @@ export const NoteCard = ({ note }) => {
                         <span row={4}>{viewNum}</span>
                         <LikeButton style={{ marginRight: 5 }}/>
                         <span>{likeNum}</span>
+                            <CommentOutlined style={{ marginRight: 5 }}/>
+                            <span>{commentNum}</span>
                             <div>
                                 <span style={{ marginLeft: 10 }}>标签：</span>
                                 {note.Tag.map((tag) => {
