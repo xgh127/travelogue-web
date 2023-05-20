@@ -15,7 +15,7 @@ import ViewsRecommendView from "./View/RecommendView/ViewsRecommend";
 
 import ManagerNotesAllView from "./View/ManagerNotesAllView";
 
-import AdministratorView from "./View/AdministratorView";
+// import AdministratorView from "./View/AdministratorView";
 import SearchResultView from "./View/SearchResultView";
 import {checkLogin} from "./Service/UserService";
 
