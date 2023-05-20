@@ -1,5 +1,5 @@
-import React from 'react';
-import {Layout, Menu, Button, Avatar, Dropdown} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Layout, Menu, Button, Avatar, Dropdown, Space} from 'antd';
 import {
     CommentOutlined,
     PlusOutlined,
@@ -10,49 +10,53 @@ import '../CSS/AppHeader.css';
 import SearchBar from "./SearchBar";
 import {useNavigate} from "react-router-dom";
 import {Constant} from "../Utils/constant";
-import {ItemBased_Collaborative_Filtering} from "../Utils/recommendUtil";
+
 const { Header } = Layout;
 const { SubMenu } = Menu;
 
 
 
-const navigationLinks = [
-    {
-        title: '首页',
-        path: '/',
-        onClick: () => {
-            console.log('首页');
-            //获取协同过滤推荐结果
 
-        },
-    },
-    {
-        title: '最新游记',
-        path: '/latest-travelogue',
-        onClick: () => {
-            console.log('最新游记');
-        },
-    },
-    {
-        title: '最热游记',
-        path: '/hottest-travelogue',
-        onClick: () => {
-            console.log('最热门游记');
-        },
-    },
-    {
-        title: '推荐游记',
-        path: '/recommend',
-        onClick: () => {
-            console.log('推荐');
-            let recommendTravelIdList = ItemBased_Collaborative_Filtering(1);
-        },
-    }
-
-];
 
 const AppHeader = () => {
     const navigate = useNavigate();
+    const navigationLinks = [
+        {
+            title: '首页',
+            path: '/',
+            onClick: () => {
+                console.log('首页');
+                navigate('/');
+                //获取协同过滤推荐结果
+
+            },
+        },
+        {
+            title: '最新游记',
+            path: '/latest-travelogue',
+            onClick: () => {
+                console.log('最新游记');
+            },
+        },
+        {
+            title: '最热游记',
+            path: '/hottest-travelogue',
+            onClick: () => {
+                console.log('最热门游记');
+                navigate('/ViewsRecommend');
+            },
+        },
+        {
+            title: '推荐游记',
+            path: '/recommend',
+            onClick: () => {
+                console.log('推荐游记');
+                navigate('/CollaborativeFiltering');
+
+            },
+        }
+
+    ];
     const menu = (
         <div>
             {/*    增加一个用户名，使其与Item对其*/}
@@ -69,22 +73,24 @@ const AppHeader = () => {
                     </div>
                     );
     return (
-        <Header className="app-header">
+        <Header className='app-header'>
+
             <div className="logo" />
                 <div className="navigation-links">
                     <Menu theme="dark" mode="horizontal">
                     {navigationLinks.map((link) => (
-                        <Menu.Item key={link.path} onClick={link.onClick} >{link.title}</Menu.Item>
+                        <Menu.Item  onClick={link.onClick} >{link.title}</Menu.Item>
                     ))}
                     </Menu>
-                </div>
-            <div className="search-box">
-                        <SearchBar className="SearchBar"
-                        />
-            </div>
-            <div className="right-container">
-                <Menu theme="dark" mode="horizontal">
 
+                </div>
+            <div style={{textAlign:'center',marginRight:"150px"}}>
+                <h1 style={{color:'orange'}}>交游记</h1>
+            </div>
+
+            <div className="right-container">
+
+                <Menu theme="dark" mode="horizontal">
                         <Button type="primary"  className="TopButton" icon={<PlusOutlined/>}
                         onClick={
                             ()=>{
@@ -105,7 +111,9 @@ const AppHeader = () => {
     />
                 </Menu>
             </div>
+
         </Header>
+
     );
 };
 

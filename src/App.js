@@ -10,7 +10,15 @@ import RegisterView from "./View/RegisterView";
 import TravelogueDetailView from "./View/TraveloguDetailView";
 import ManagerallView from "./View/ManagerallView";
 import {Constant} from "./Utils/constant";
-import AdministratorView from "./View/AdministratorView";
+import CollaborativeFiltering from "./View/RecommendView/CollaborativeFiltering";
+import ViewsRecommendView from "./View/RecommendView/ViewsRecommend";
+
+import ManagerNotesAllView from "./View/ManagerNotesAllView";
+
+// import AdministratorView from "./View/AdministratorView";
+import SearchResultView from "./View/SearchResultView";
+import {checkLogin} from "./Service/UserService";
+
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
 
 
@@ -18,13 +26,13 @@ const routes = [
     {
         path: '/',
         element: <HomeView />,
-        canActivate: (user) => !!user // 只有登录用户才能访问首页
+        canActivate: checkLogin
     },
 
     {
         path: '/personalCenter',
         element: <PersonCenterView/>,
-        canActivate: (user) => !!user // 只有登录用户才能访问首页
+        canActivate: checkLogin
     },
     {
         path: '/editor/audit',
@@ -34,28 +42,40 @@ const routes = [
     {
         path:'/TextEditor',
         element: <TextEditorView/>,
-        canActivate: (user) => {
-            return user && user.UserAuth.userType === 1;
-        }
+        canActivate: checkLogin
 
     },
     {
         path: '/travelogueDetail',
         element: <TravelogueDetailView/>,
-        canActivate: (user) => !!user
+        canActivate: checkLogin
     },
     {
-
+        path: '/CollaborativeFiltering',
+        element: <CollaborativeFiltering/>,
+        canActivate: checkLogin
+    },
+    {
         path:'/register',
         element: <RegisterView/>,
     },
     {
-        path:'/administrator',
-        element: <AdministratorView/>,
-    },
-    {
         path: '/manager',
         element: <ManagerallView/>,
+    },
+    {
+        path: '/managernotesall',
+        element: <ManagerNotesAllView/>,
+    },
+    {
+        path:'/ViewsRecommend',
+        element: <ViewsRecommendView/>,
+        canActivate: checkLogin
+    },
+    {
+        path:'/SearchResult',
+        element: <SearchResultView/>,
+        canActivate: checkLogin
     }
 ];
 function App() {
@@ -66,8 +86,6 @@ function App() {
             const storedUser = localStorage.getItem(Constant.USER);
             if (storedUser) {
                 setUser(JSON.parse(storedUser));
-            } else {
-                setUser(null);
             }
         };
 
@@ -83,7 +101,7 @@ function App() {
         };
     }, []);
         return (
-            <Router>
+            <Router >
                 <div className="App">
                     <Routes>
 
