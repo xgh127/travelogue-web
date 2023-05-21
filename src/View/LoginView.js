@@ -21,15 +21,6 @@ const LoginView = (props) => {
             let user = JSON.stringify(resp.data[0]);
             localStorage.setItem(Constant.USER, user);
             let userJson = JSON.parse(user);
-            if (userJson.UserAuth.userType === 1) {
-                navigate("/");
-            } else if (userJson.UserAuth.userType === 2) {
-                navigate("/editorCenter");
-            } else if (userJson.UserAuth.userType === 3) {
-                navigate("/mainEditorCenter");
-            } else if (userJson.UserAuth.userType === 0) {
-                navigate("/manager");
-            }
             alert(userJson.UserAuth.userType);
             localStorage.setItem(Constant.USERID, userJson.id)
             message.success("登录成功");
