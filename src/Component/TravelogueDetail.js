@@ -139,9 +139,11 @@ const TravelogueDetails = () => {
             CommentTime: JSON.stringify(new Date()),
             ParentId: parseInt(localStorage.getItem(Constant.USERID)),
         };
+        console.log("newComment:" + JSON.stringify(newComment));
         // 向后端发送POST请求来更新comment表
         const commentresp = await doJSONPost('/Comment', newComment);
         const commentrespJson = resp2Json(commentresp);
+        console.log("commentrespJson:" + JSON.stringify(commentrespJson));
         if (commentrespJson.code === 0) {
             message.success('评论成功！');
             //更新游记信息，将评论信息添加到游记信息中
@@ -212,11 +214,13 @@ const TravelogueDetails = () => {
                     <h3>评论区</h3>
                     {/* 添加评论的输入框 */}
                     <Form onFinish={handleAddComment}>
+                        <Tooltip title="评论仅支持英文">
                         <Form.Item name="comment">
-                            <Tooltip title="评论仅支持英文">
+
                             <TextArea rows={4} placeholder="善言结善缘，恶语伤人心！" />
-                            </Tooltip>
+
                         </Form.Item>
+                        </Tooltip>
                         <Form.Item>
                             <Button type="primary" htmlType="submit">提交评论</Button>
                         </Form.Item>
