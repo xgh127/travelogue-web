@@ -24,6 +24,7 @@ import LatestRecommendView from "./View/RecommendView/LattestRecommendView";
 import AdminDataView from "./View/AdminDataView";
 import MainEditorProfileView from "./View/MainEditorProfileView";
 import EditorProfileView from "./View/EditroProfileView";
+import SubmitSuccessView from "./View/SubmitSuccessView";
 
 
 //0代表管理员，1代表用户，2代表编辑，3代表主编，-1代表黑名单用户
@@ -107,6 +108,9 @@ const routes = [
     },{
         path: '/AdminData',
         element: <AdminDataView/>,
+    },{
+        path: '/SubmitSuccessView',
+        element: <SubmitSuccessView/>,
     }
 ];
 function App() {

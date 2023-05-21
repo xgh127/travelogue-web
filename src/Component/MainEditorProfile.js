@@ -221,6 +221,7 @@ const MainEditorProfile = () => {
                                 key="assignee"
                                 render={(text, record) => (
                                     <Select
+                                        style={{ width: 120 }}
                                         value={text}
                                         onChange={(value) => handleAllocate(value,record)}
                                         disabled={!!text}

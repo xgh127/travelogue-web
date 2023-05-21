@@ -66,10 +66,6 @@ const Editor = () => {
         setSelectedTags(selectedTagLabels);
     };
 
-    // useEffect(() => {
-    //     // console.log("选中的标签", selectedTags);
-    // }, [selectedTags]);
-
     const handleAbstractChange = (e) => {
         setAbstract(e.target.value);
     };
@@ -211,11 +207,12 @@ const Editor = () => {
         };
         const travelogueId = window.location.search.split('=')[1];
         console.log("data", data); // 打印出json数据
-        let resp = await doJSONPost('/Travelogue/', data);
+        let resp = await doJSONPut('/Travelogue/'+travelogueId, data);
         console.log(resp);
         if (resp.code === 0) {
-            PostSuccessMsg();
-            navigate("/");
+            // PostSuccessMsg();
+            // navigate("/");
+            message.success('保存成功');
         } else {
             PostFailMsg();
         }
@@ -236,6 +233,7 @@ const Editor = () => {
                 </div>
                 <div className="editor-toolbar">
                     <ReactQuill
+
                         theme="snow"
                         placeholder={'请输入正文'}
                         value={value}
