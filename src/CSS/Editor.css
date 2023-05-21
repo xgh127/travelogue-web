@@ -81,7 +81,7 @@
     position: relative;
 
 }
-
+.save-button,
 .preview-button,
 .sensitive-button,
 .update-button {
@@ -92,9 +92,12 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
+.save-button{
+    background-color: #d2d2b8;
+    color: #333;
+}
 .preview-button {
-    background-color: #ddd;
+    background-color: #d2d285;
     color: #333;
 }
 

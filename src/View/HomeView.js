@@ -9,19 +9,13 @@ import {doGet} from "../Utils/ajax";
 import {resp2Json} from "../Utils/Tool";
 
 const HomeView = (props) => {
-    // const [Notes,setNotes]=useState([]);
-    // useEffect(async () => {
-    //     let notesInfo = await doGet('/Travelogue');
-    //     setNotes(resp2Json(notesInfo));
-    //     console.log("notesInfo"+JSON.stringify(notesInfo));
-    // },[])
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 //  /Travelogue?Travelogue.Status=3
-                const notesInfo = await doGet('/Travelogue');
+                const notesInfo = await doGet('/Travelogue?Travelogue.Status=3');
                 // console.log("notesInfo111111111" + JSON.stringify(notesInfo));
                 const parsedNotes = resp2Json(notesInfo);
                 console.log("notesInfo" + JSON.stringify(notesInfo.data));
