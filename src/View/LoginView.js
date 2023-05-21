@@ -20,28 +20,27 @@ const LoginView = (props) => {
 
             let user = JSON.stringify(resp.data[0]);
             localStorage.setItem(Constant.USER, user);
-            // navigate("/", {});
-            // alert(user);
             let userJson = JSON.parse(user);
-            if(userJson.UserAuth.userType === 1){
-                navigate("/");
+            //debug：管理员和普通用户登录逻辑问题修复
+            switch (userJson.UserAuth.userType) {
+                case 0:
+                    navigate("/manager");
+                    break;
+                case 1:
+                    navigate("/");
+                    break;
+                case 2:
+                    navigate("/editorCenter");
+                    break;
+                case 3:
+                    navigate("/mainEditorCenter");
+                    break;
+                default:
+                    navigate("/");
+                    break;
             }
-            else if(userJson.UserAuth.userType === 2){
-                navigate("/editorCenter");
-            }
-            else if(userJson.UserAuth.userType === 3){
-                navigate("/mainEditorCenter");
-            }
-            alert(userJson.id);
             localStorage.setItem(Constant.USERID, userJson.id)
             message.success("登录成功");
-            if (userJson.UserAuth.userType === 0){
-                navigate("/manager");
-            }
-            else{
-                navigate("/",{});
-            }
-
         } else {
             message.error("密码错误");
         }
