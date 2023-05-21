@@ -346,8 +346,10 @@ if(userType == 1){
                             />
                             <Column
                                 title="修改游记"
-                                render={(record) => (
-                                    <button onClick={() => handleLogueChange(record.id)}>修改</button>
+                                render={(status,record) => (
+                                    status === 4 ? (
+                                        <button onClick={() => handleLogueChange(record.id)}>修改</button>
+                                    ) : null
                                 )}
                             />
                         </Table>
